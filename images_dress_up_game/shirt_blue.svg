@@ -1,0 +1,9 @@
+<svg width="120" height="100" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Torso -->
+    <path d="M 10,20 C 10,10 110,10 110,20 L 110,80 C 110,90 10,90 10,80 Z" fill="#007BFF" stroke="#0056b3" stroke-width="1.5"/>
+    <!-- Sleeves -->
+    <path d="M 0,25 C 10,20 10,30 0,35 Z" fill="#007BFF" stroke="#0056b3" stroke-width="1.5"/>
+    <path d="M 120,25 C 110,20 110,30 120,35 Z" fill="#007BFF" stroke="#0056b3" stroke-width="1.5"/>
+    <!-- Neck hole -->
+    <circle cx="60" cy="25" r="15" fill="#f0f8ff" /> <!-- AliceBlue, like background -->
+</svg>

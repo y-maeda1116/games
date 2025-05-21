@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dress-Up Game</title>
+    <link rel="stylesheet" href="dress_up_game.css">
+</head>
+<body>
+    <h1>Dress Up the Bear!</h1>
+
+    <div class="game-container">
+        <div id="character-area" class="character-area">
+            <img src="images_dress_up_game/bear_char.svg" alt="Bear Character" id="character-image">
+            <!-- Snap zones will be overlaid here for clothing items -->
+            <div class="snap-zone" id="zone-head" data-category="hat"></div>
+            <div class="snap-zone" id="zone-face" data-category="glasses"></div>
+            <div class="snap-zone" id="zone-torso" data-category="shirt"></div>
+            <div class="snap-zone" id="zone-legs" data-category="pants"></div>
+        </div>
+
+        <div id="wardrobe-area" class="wardrobe-area">
+            <h2>Wardrobe</h2>
+            <!-- Clothing items will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <button id="reset-button">Reset Outfit</button>
+
+    <script src="dress_up_game.js"></script>
+</body>
+</html>

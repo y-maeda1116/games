@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Games for Kids</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff; /* AliceBlue */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        header {
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: #ff69b4; /* HotPink */
+            font-size: 2.5em;
+            text-shadow: 1px 1px #fff;
+        }
+        .instructions {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav li {
+            margin: 15px 0;
+        }
+        nav a {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            color: #fff;
+            background-color: #007bff; /* Blue */
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav a:hover, nav a:focus {
+            background-color: #0056b3; /* Darker Blue */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        /* Specific game link colors for fun */
+        nav a.matching-game-link { background-color: #28a745; /* Green */ }
+        nav a.matching-game-link:hover, nav a.matching-game-link:focus { background-color: #1e7e34; }
+
+        nav a.puzzle-game-link { background-color: #ffc107; /* Yellow */ color: #333; }
+        nav a.puzzle-game-link:hover, nav a.puzzle-game-link:focus { background-color: #e0a800; }
+
+        nav a.dress-up-game-link { background-color: #6f42c1; /* Purple */ }
+        nav a.dress-up-game-link:hover, nav a.dress-up-game-link:focus { background-color: #5a32a3; }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fun Games for 5-Year-Olds!</h1>
+    </header>
+
+    <p class="instructions">Click on a game to play!</p>
+
+    <nav>
+        <ul>
+            <li><a href="matching_game.html" class="matching-game-link">Play Matching Game</a></li>
+            <li><a href="puzzle_game.html" class="puzzle-game-link">Play Puzzle Game</a></li>
+            <li><a href="dress_up_game.html" class="dress-up-game-link">Play Dress-Up Game</a></li>
+        </ul>
+    </nav>
+
+    <footer>
+        <p>&copy; 2024 Fun Games Collection</p>
+    </footer>
+</body>
+</html>

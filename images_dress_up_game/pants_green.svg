@@ -1,0 +1,9 @@
+<svg width="100" height="70" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main shorts body -->
+    <path d="M 10,10 L 90,10 L 85,60 L 15,60 Z" fill="#28a745" stroke="#1e7e34" stroke-width="1.5"/>
+    <!-- Leg holes (cutouts) -->
+    <path d="M 15,60 Q 30,40 45,60" stroke="#1e7e34" stroke-width="1.5" fill="transparent"/>
+    <path d="M 55,60 Q 70,40 85,60" stroke="#1e7e34" stroke-width="1.5" fill="transparent"/>
+    <!-- Belt line -->
+    <line x1="10" y1="15" x2="90" y2="15" stroke="#1e7e34" stroke-width="2"/>
+</svg>

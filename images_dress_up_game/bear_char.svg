@@ -1,0 +1,32 @@
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <path d="M 50,100 C 50,50 150,50 150,100 L 150,200 C 150,250 50,250 50,200 Z" fill="#D2B48C" stroke="#8B4513" stroke-width="2"/>
+
+    <!-- Head -->
+    <circle cx="100" cy="80" r="50" fill="#D2B48C" stroke="#8B4513" stroke-width="2"/>
+
+    <!-- Ears -->
+    <circle cx="60" cy="40" r="20" fill="#D2B48C" stroke="#8B4513" stroke-width="2"/>
+    <circle cx="140" cy="40" r="20" fill="#D2B48C" stroke="#8B4513" stroke-width="2"/>
+    <circle cx="60" cy="40" r="10" fill="#F5DEB3"/>
+    <circle cx="140" cy="40" r="10" fill="#F5DEB3"/>
+
+    <!-- Eyes -->
+    <circle cx="85" cy="75" r="8" fill="#000"/>
+    <circle cx="115" cy="75" r="8" fill="#000"/>
+    <circle cx="87" cy="73" r="2" fill="#FFF"/> <!-- Highlight -->
+    <circle cx="117" cy="73" r="2" fill="#FFF"/> <!-- Highlight -->
+
+    <!-- Muzzle -->
+    <ellipse cx="100" cy="95" rx="25" ry="15" fill="#F5DEB3" stroke="#8B4513" stroke-width="1.5"/>
+    <circle cx="100" cy="90" r="5" fill="#000"/> <!-- Nose -->
+    <path d="M 90,100 Q 100,105 110,100" stroke="#000" stroke-width="1.5" fill="transparent"/> <!-- Mouth -->
+
+    <!-- Arms (simple stubs) -->
+    <path d="M 40,120 C 20,140 20,160 40,180 L 50,170 C 40,160 40,140 50,130 Z" fill="#D2B48C" stroke="#8B4513" stroke-width="2"/>
+    <path d="M 160,120 C 180,140 180,160 160,180 L 150,170 C 160,160 160,140 150,130 Z" fill="#D2B48C" stroke="#8B4513" stroke-width="2"/>
+
+    <!-- Legs (simple stubs) -->
+    <path d="M 60,240 C 40,270 70,290 80,280 L 80,250 C 70,260 65,250 60,240 Z" fill="#D2B48C" stroke="#8B4513" stroke-width="2"/>
+    <path d="M 140,240 C 160,270 130,290 120,280 L 120,250 C 130,260 135,250 140,240 Z" fill="#D2B48C" stroke="#8B4513" stroke-width="2"/>
+</svg>
