@@ -1,0 +1,8 @@
+<svg width="90" height="50" viewBox="0 0 90 50" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main cap part -->
+    <path d="M 10,25 A 35,20 0 0,1 80,25 L 80,40 A 35,20 0 0,1 10,40 Z" fill="#FF0000" stroke="#A00000" stroke-width="1.5"/>
+    <!-- Brim -->
+    <path d="M 5,25 Q 25,15 45,25 Q 65,15 85,25 C 85,30 75,35 45,35 C 15,35 5,30 5,25 Z" fill="#FF0000" stroke="#A00000" stroke-width="1.5"/>
+    <!-- Button on top -->
+    <circle cx="45" cy="18" r="5" fill="#FF0000" stroke="#A00000" stroke-width="1"/>
+</svg>

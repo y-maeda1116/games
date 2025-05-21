@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align to top */
+    min-height: 100vh;
+    margin: 20px 0;
+    background-color: #f0f8ff; /* AliceBlue, a light and friendly color */
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.game-container {
+    display: flex;
+    justify-content: space-around; /* Puts space between pieces area and board */
+    align-items: flex-start; /* Align items to the top of the container */
+    width: 90%;
+    max-width: 1000px; /* Max width for larger screens */
+    margin-bottom: 20px;
+}
+
+.pieces-area, .puzzle-board {
+    border: 2px dashed #007bff; /* Blue dashed border */
+    padding: 15px;
+    min-height: 350px; /* Approximate height for a 3x2 puzzle with 100px pieces + title + padding */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.pieces-area {
+    width: 40%; /* Adjust as needed */
+    display: flex;
+    flex-wrap: wrap; /* Allow pieces to wrap */
+    justify-content: center; /* Center pieces horizontally */
+    align-content: flex-start; /* Align pieces to the start of the container */
+    gap: 10px; /* Spacing between pieces */
+}
+
+.puzzle-board {
+    width: 55%; /* Adjust as needed, allowing space for pieces */
+    display: grid;
+    /* Grid will be configured by JS based on puzzle dimensions (e.g., 3 columns, 2 rows) */
+    gap: 5px; /* Small gap between slots */
+    position: relative; /* For absolute positioning of helper text if needed */
+}
+
+.area-title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+    display: block; /* Ensure it takes full width before flex/grid items */
+}
+
+.puzzle-piece {
+    /* Dimensions will be set by JS based on image slice */
+    background-color: #ddd; /* Placeholder */
+    border: 1px solid #999;
+    cursor: grab;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    background-size: cover; /* This will be key for showing image parts */
+    background-position: center; /* Adjust as needed with JS */
+}
+
+.puzzle-piece:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    z-index: 1000; /* Ensure dragged piece is on top */
+}
+
+.puzzle-slot {
+    /* Dimensions will be set by JS */
+    background-color: #e0e0e0; /* Light gray for empty slot */
+    border: 1px dashed #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    color: #888;
+}
+
+.puzzle-slot.occupied {
+    border-style: solid;
+    border-color: #28a745; /* Green border for correctly placed piece */
+    background-color: transparent; /* Let piece show through */
+}
+
+
+.message-area {
+    font-size: 24px;
+    color: #28a745; /* Green for success */
+    margin: 20px 0;
+    min-height: 30px;
+    font-weight: bold;
+}
+
+button#reset-button {
+    padding: 12px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff; /* Blue */
+    color: white;
+    transition: background-color 0.2s;
+}
+
+button#reset-button:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+/* Class for when a piece is being dragged over a droppable area */
+.drag-over {
+    background-color: #d0e0f0; /* Light blue highlight */
+}
