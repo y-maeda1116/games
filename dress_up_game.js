@@ -1,8 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const characterArea = document.getElementById('character-area');
+    const characterImage = document.getElementById('character-image');
     const wardrobeArea = document.getElementById('wardrobe-area');
     const resetButton = document.getElementById('reset-button');
     const snapZones = document.querySelectorAll('.snap-zone');
+    const characterSelect = document.getElementById('character-select');
+
+    const characters = [
+        { id: 'bear', name: 'Bear', src: 'images_dress_up_game/bear_char.svg' },
+        { id: 'char1', name: 'Cat', src: 'images_dress_up_game/char_1.svg' },
+        { id: 'char2', name: 'Rabbit', src: 'images_dress_up_game/char_2.svg' },
+        { id: 'char3', name: 'Robot', src: 'images_dress_up_game/char_3.svg' },
+        { id: 'char4', name: 'Ghost', src: 'images_dress_up_game/char_4.svg' },
+        { id: 'char5', name: 'Alien', src: 'images_dress_up_game/char_5.svg' },
+        { id: 'char6', name: 'Simple Person', src: 'images_dress_up_game/char_6.svg' },
+        { id: 'char7', name: 'Dog', src: 'images_dress_up_game/char_7.svg' },
+        { id: 'char8', name: 'Bird', src: 'images_dress_up_game/char_8.svg' },
+        { id: 'char9', name: 'Monster', src: 'images_dress_up_game/char_9.svg' },
+        { id: 'char10', name: 'Knight', src: 'images_dress_up_game/char_10.svg' }
+    ];
 
     const clothingItems = [
         { id: 'hat1', name: 'Red Cap', src: 'images_dress_up_game/hat_red.svg', category: 'hat' },
@@ -109,14 +124,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 4. Reset Outfit Button
-    resetButton.addEventListener('click', () => {
+    // 4. Reset Outfit Function (used by button and character change)
+    function resetOutfit() {
         snapZones.forEach(zone => {
             zone.innerHTML = ''; // Clear all items from character
         });
-        // Wardrobe remains populated as items are not removed from it.
+    }
+
+    resetButton.addEventListener('click', resetOutfit);
+
+    // 5. Populate Character Selection Dropdown
+    function populateCharacterSelect() {
+        characters.forEach(character => {
+            const option = document.createElement('option');
+            option.value = character.src;
+            option.textContent = character.name;
+            if (character.id === 'bear') { // Default selection
+                option.selected = true;
+            }
+            characterSelect.appendChild(option);
+        });
+    }
+
+    // 6. Handle Character Change
+    characterSelect.addEventListener('change', (event) => {
+        const selectedSrc = event.target.value;
+        characterImage.src = selectedSrc;
+        characterImage.alt = characterSelect.options[characterSelect.selectedIndex].text; // Update alt text
+        resetOutfit(); // Clear clothes when character changes
     });
 
     // Initialize Game
     populateWardrobe();
+    populateCharacterSelect();
+    // Ensure initial character alt text is set correctly (though it's set in HTML initially)
+    const initialCharacter = characters.find(c => c.src === characterImage.src);
+    if (initialCharacter) {
+        characterImage.alt = initialCharacter.name;
+    }
 });
