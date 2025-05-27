@@ -1,1 +1,17 @@
-<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><path d="M50,280 Q100,50 150,280 Z" fill="lightcyan"/><circle cx="80" cy="150" r="10" fill="black"/><circle cx="120" cy="150" r="10" fill="black"/></svg>
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Ghost Body -->
+    <path d="M60,280 C40,240 40,150 100,80 C160,150 160,240 140,280 C120,260 80,260 60,280 Z" fill="#f0f8ff" stroke="#d6e4f0" stroke-width="1.5"/>
+
+    <!-- Eyes -->
+    <circle cx="80" cy="150" r="18" fill="black"/>
+    <circle cx="120" cy="150" r="18" fill="black"/>
+    <circle cx="86" cy="145" r="7" fill="white"/> <!-- Highlight left -->
+    <circle cx="126" cy="145" r="7" fill="white"/> <!-- Highlight right -->
+
+    <!-- Mouth -->
+    <circle cx="100" cy="185" r="7" fill="#5F9EA0" stroke="#4F8183" stroke-width="1"/>
+    
+    <!-- Rosy Cheeks -->
+    <circle cx="65" cy="175" r="12" fill="pink" opacity="0.4"/>
+    <circle cx="135" cy="175" r="12" fill="pink" opacity="0.4"/>
+</svg>

@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
         items = difficulties[currentDifficulty].items;
         totalPairs = items.length;
         const cols = difficulties[currentDifficulty].cols;
-        gameBoard.style.gridTemplateColumns = `repeat(${cols}, 100px)`;
+        // Adjust card size used in JS to match CSS (80px)
+        gameBoard.style.gridTemplateColumns = `repeat(${cols}, 80px)`;
 
         gameBoard.innerHTML = ''; // Clear previous board
         messageArea.textContent = '';

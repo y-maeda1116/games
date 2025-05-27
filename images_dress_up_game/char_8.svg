@@ -1,1 +1,26 @@
-<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="150" rx="60" ry="80" fill="skyblue"/><circle cx="100" cy="100" r="40" fill="skyblue"/><polygon points="150,120 180,100 180,140" fill="orange"/><circle cx="85" cy="90" r="5" fill="black"/><circle cx="115" cy="90" r="5" fill="black"/></svg>
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <ellipse cx="100" cy="170" rx="60" ry="70" fill="lightyellow" stroke="khaki" stroke-width="1.5"/>
+    <!-- Head -->
+    <circle cx="100" cy="110" r="45" fill="lightyellow" stroke="khaki" stroke-width="1.5"/>
+
+    <!-- Crest/Tuft -->
+    <path d="M90,70 Q100,50 110,70 M95,70 Q100,55 105,70" stroke="gold" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- Eyes -->
+    <circle cx="80" cy="105" r="10" fill="black"/>
+    <circle cx="120" cy="105" r="10" fill="black"/>
+    <circle cx="83" cy="102" r="3" fill="white"/> <!-- Highlight left -->
+    <circle cx="123" cy="102" r="3" fill="white"/> <!-- Highlight right -->
+
+    <!-- Beak -->
+    <polygon points="95,115 105,115 100,130" fill="orange" stroke="darkorange" stroke-width="1"/>
+
+    <!-- Wings -->
+    <ellipse cx="55" cy="160" rx="35" ry="25" fill="khaki" transform="rotate(-25 55 160)" stroke="darkkhaki" stroke-width="1"/>
+    <ellipse cx="145" cy="160" rx="35" ry="25" fill="khaki" transform="rotate(25 145 160)" stroke="darkkhaki" stroke-width="1"/>
+    
+    <!-- Feet -->
+    <ellipse cx="80" cy="238" rx="18" ry="10" fill="orange" stroke="darkorange" stroke-width="0.5"/>
+    <ellipse cx="120" cy="238" rx="18" ry="10" fill="orange" stroke="darkorange" stroke-width="0.5"/>
+</svg>
