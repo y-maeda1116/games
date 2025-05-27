@@ -1,0 +1,23 @@
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <rect x="40" y="50" width="120" height="200" fill="mediumpurple" rx="60" ry="60" stroke="#9370DB" stroke-width="1.5"/>
+
+    <!-- Horns -->
+    <path d="M60,60 Q50,30 80,40 C70,45 65,55 60,60 Z" fill="mediumslateblue" stroke="#8A2BE2" stroke-width="1"/>
+    <path d="M140,60 Q150,30 120,40 C130,45 135,55 140,60 Z" fill="mediumslateblue" stroke="#8A2BE2" stroke-width="1"/>
+
+    <!-- Eye -->
+    <circle cx="100" cy="110" r="35" fill="white" stroke="darkslateblue" stroke-width="1"/>
+    <circle cx="100" cy="110" r="20" fill="black"/> <!-- Pupil -->
+    <circle cx="108" cy="102" r="8" fill="white"/> <!-- Highlight -->
+
+    <!-- Mouth -->
+    <path d="M70 150 Q100 180 130 150 C120 185 80 185 70 150 Z" fill="lightcoral" stroke="crimson" stroke-width="1"/>
+    <!-- Teeth -->
+    <rect x="80" y="150" width="12" height="12" fill="white" rx="3" ry="3"/>
+    <rect x="108" y="150" width="12" height="12" fill="white" rx="3" ry="3"/>
+    
+    <!-- Feet -->
+    <ellipse cx="70" cy="248" rx="25" ry="15" fill="mediumslateblue" stroke="#8A2BE2" stroke-width="1"/>
+    <ellipse cx="130" cy="248" rx="25" ry="15" fill="mediumslateblue" stroke="#8A2BE2" stroke-width="1"/>
+</svg>
