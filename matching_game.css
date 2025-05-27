@@ -7,25 +7,39 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    padding-top: 20px; /* Add some space at the top */
+    min-height: 100vh; /* Allow content to grow */
+    box-sizing: border-box; /* Include padding in height calculation */
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap to the next line */
+    justify-content: center; /* Center buttons */
+    margin-bottom: 15px;
+    gap: 10px; /* Spacing between buttons */
 }
 
 .game-board {
     display: grid;
-    grid-template-columns: repeat(4, 100px);
-    grid-gap: 10px;
+    /* grid-template-columns is set by JS based on difficulty */
+    grid-gap: 8px; /* Slightly reduced gap */
     margin-bottom: 20px;
+    max-width: 100%; /* Ensure board doesn't overflow its container */
+    padding: 5px; /* Add a little padding so cards don't touch edges if board is flush */
+    box-sizing: border-box; /* Ensure padding is included in max-width */
 }
 
 .card {
-    width: 100px;
-    height: 100px;
+    width: 70px;  /* Further reduced card size */
+    height: 70px; /* Further reduced card size */
     background-color: #ddd;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 20px; /* Slightly reduce font size for smaller cards */
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 4px; /* Slightly reduce border radius */
     transition: transform 0.3s;
     transform-style: preserve-3d;
 }
@@ -67,6 +81,7 @@ body {
     min-height: 30px; /* Reserve space for message */
 }
 
+/* General button styles - already present */
 button {
     padding: 10px 20px;
     font-size: 18px;
@@ -75,8 +90,16 @@ button {
     border-radius: 5px;
     background-color: #4CAF50;
     color: white;
+    transition: background-color 0.2s; /* Smooth hover transition */
 }
 
 button:hover {
     background-color: #45a049;
+}
+
+/* Specific adjustments for buttons within the controls area */
+.controls button {
+    padding: 8px 15px; /* Smaller padding for control buttons */
+    font-size: 16px;   /* Smaller font for control buttons */
+    margin: 0; /* Margin is handled by gap in .controls */
 }

@@ -7,6 +7,11 @@ body {
     min-height: 100vh;
     margin: 20px 0;
     background-color: #f0f8ff; /* AliceBlue, a light and friendly color */
+    box-sizing: border-box; /* Apply to all elements for easier layout */
+}
+
+*, *::before, *::after {
+    box-sizing: inherit; /* Inherit box-sizing from body */
 }
 
 h1 {
@@ -26,27 +31,33 @@ h1 {
 .pieces-area, .puzzle-board {
     border: 2px dashed #007bff; /* Blue dashed border */
     padding: 15px;
-    min-height: 350px; /* Approximate height for a 3x2 puzzle with 100px pieces + title + padding */
+    /* min-height: 350px; /* Approximate height for a 3x3 puzzle with 100px pieces + title + padding */
+    /* For 3x3: (100px * 3 rows) + (5px gap * 2) + (15px padding * 2) + (area-title margin/height) approx 300+10+30 = 340px + title */
+    min-height: calc(3 * 100px + 2 * 5px + 2 * 15px + 40px); /* Dynamically calculate based on common sizes */
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    /* box-sizing: border-box; /* Added via global rule */
 }
 
 .pieces-area {
-    width: 40%; /* Adjust as needed */
+    width: 350px; /* Fixed width: (100px * 3 pieces) + (10px * 2 gaps) + (15px * 2 padding) */
     display: flex;
     flex-wrap: wrap; /* Allow pieces to wrap */
-    justify-content: center; /* Center pieces horizontally */
-    align-content: flex-start; /* Align pieces to the start of the container */
+    justify-content: flex-start; /* Align pieces to the start of the line */
+    align-content: flex-start; /* Align lines to the start of the container */
     gap: 10px; /* Spacing between pieces */
 }
 
 .puzzle-board {
     width: 55%; /* Adjust as needed, allowing space for pieces */
     display: grid;
-    /* Grid will be configured by JS based on puzzle dimensions (e.g., 3 columns, 2 rows) */
+    /* grid-template-columns and grid-template-rows are set by JS */
     gap: 5px; /* Small gap between slots */
     position: relative; /* For absolute positioning of helper text if needed */
+    /* Ensure the board itself can shrink if its content is smaller, but also not exceed its allocated space */
+    align-content: start; /* Align grid tracks to the start of the grid container */
+    justify-content: start; /* Align grid items to the start of their tracks if grid area is larger than content */
 }
 
 .area-title {
@@ -78,14 +89,15 @@ h1 {
 }
 
 .puzzle-slot {
-    /* Dimensions will be set by JS */
+    /* Dimensions (width, height) will be set by JS to match pieceSize */
     background-color: #e0e0e0; /* Light gray for empty slot */
     border: 1px dashed #aaa;
-    display: flex;
+    display: flex; /* To center potential text/numbers in slot */
     align-items: center;
     justify-content: center;
     font-size: 0.8em;
     color: #888;
+    /* box-sizing: border-box; /* Added via global rule */
 }
 
 .puzzle-slot.occupied {
