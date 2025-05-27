@@ -1,0 +1,33 @@
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Head -->
+    <circle cx="100" cy="70" r="45" fill="#FFE4C4" stroke="#F5DEB3" stroke-width="1"/>
+
+    <!-- Hair -->
+    <path d="M65,70 C65,30 135,30 135,70 Q100,80 65,70 Z" fill="saddlebrown"/>
+    <path d="M60,60 Q100,20 140,60 L135,75 Q100,45 65,75 Z" fill="#8B4513" /> <!-- Simpler hair cap -->
+
+
+    <!-- Eyes -->
+    <circle cx="80" cy="70" r="8" fill="black"/>
+    <circle cx="120" cy="70" r="8" fill="black"/>
+    <circle cx="83" cy="67" r="3" fill="white"/> <!-- Highlight left -->
+    <circle cx="123" cy="67" r="3" fill="white"/> <!-- Highlight right -->
+
+    <!-- Mouth -->
+    <path d="M90 85 Q100 95 110 85" stroke="brown" stroke-width="1.5" fill="transparent"/>
+
+    <!-- Body -->
+    <rect x="60" y="110" width="80" height="90" fill="lightpink" rx="15" ry="15" stroke="hotpink" stroke-width="1"/>
+
+    <!-- Arms (simple stubs) -->
+    <ellipse cx="50" cy="135" rx="15" ry="25" fill="#FFE4C4" stroke="#F5DEB3" stroke-width="1" transform="rotate(-10 50 135)"/>
+    <ellipse cx="150" cy="135" rx="15" ry="25" fill="#FFE4C4" stroke="#F5DEB3" stroke-width="1" transform="rotate(10 150 135)"/>
+    
+    <!-- Legs -->
+    <rect x="65" y="195" width="30" height="60" fill="skyblue" rx="10" ry="10" stroke="steelblue" stroke-width="1"/>
+    <rect x="105" y="195" width="30" height="60" fill="skyblue" rx="10" ry="10" stroke="steelblue" stroke-width="1"/>
+
+    <!-- Feet (simple indication) -->
+    <ellipse cx="80" cy="255" rx="18" ry="10" fill="#B0C4DE"/>
+    <ellipse cx="120" cy="255" rx="18" ry="10" fill="#B0C4DE"/>
+</svg>

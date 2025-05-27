@@ -7,11 +7,18 @@
     <link rel="stylesheet" href="dress_up_game.css">
 </head>
 <body>
-    <h1>Dress Up the Bear!</h1>
+    <h1>Dress Up Your Character!</h1>
+
+    <div id="character-selection-area">
+        <label for="character-select">Choose Character:</label>
+        <select id="character-select">
+            <!-- Options will be populated by JavaScript -->
+        </select>
+    </div>
 
     <div class="game-container">
         <div id="character-area" class="character-area">
-            <img src="images_dress_up_game/bear_char.svg" alt="Bear Character" id="character-image">
+            <img src="images_dress_up_game/bear_char.svg" alt="Character" id="character-image">
             <!-- Snap zones will be overlaid here for clothing items -->
             <div class="snap-zone" id="zone-head" data-category="hat"></div>
             <div class="snap-zone" id="zone-face" data-category="glasses"></div>
