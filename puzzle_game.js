@@ -5,15 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetButton = document.getElementById('reset-button');
 
     const imageUrl = 'images_puzzle_game/smiling_sun.svg';
-    const puzzleRows = 2; // For a 3x2 puzzle
+    const puzzleRows = 3; // For a 3x3 puzzle
     const puzzleCols = 3;
     const totalPieces = puzzleRows * puzzleCols;
 
-    // Assuming the image is 300x200, so each piece is 100x100
+    // Assuming the image is 300x300, so each piece is 100x100
     const pieceWidth = 100;
     const pieceHeight = 100;
     const imageWidth = 300;
-    const imageHeight = 200;
+    const imageHeight = 300;
 
     let correctlyPlacedPieces = 0;
     let draggedPiece = null;
@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
             piece.style.height = `${pieceHeight}px`;
             piece.style.backgroundImage = `url(${imageUrl})`;
 
-            const row = Math.floor(i / puzzleCols); // 0 or 1 for a 3x2 puzzle
-            const col = i % puzzleCols;             // 0, 1, or 2 for a 3x2 puzzle
+            const row = Math.floor(i / puzzleCols); // 0, 1, or 2 for a 3x3 puzzle
+            const col = i % puzzleCols;             // 0, 1, or 2 for a 3x3 puzzle
 
             // Calculate background position for this piece
             // (col * pieceWidth) gives the x-offset of the slice
@@ -122,36 +122,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleDrop(event) {
         event.preventDefault();
-        const targetSlot = event.target.closest('.puzzle-slot');
+        const targetSlot = event.target.closest('.puzzle-slot'); // Slot where mouse was released
+        if (!targetSlot) return; // Should always be a slot if dragover was allowed
         targetSlot.classList.remove('drag-over');
 
-        if (!draggedPiece || !targetSlot || targetSlot.hasChildNodes()) {
-            // If no piece is being dragged, or target is not a slot, or slot is occupied
+        if (!draggedPiece) {
             return;
         }
 
-        const pieceId = draggedPiece.dataset.pieceId;
         const correctSlotId = draggedPiece.dataset.correctSlot;
-        const targetSlotId = targetSlot.dataset.slotId;
+        const correctSlotElement = document.querySelector(`[data-slot-id="${correctSlotId}"]`);
 
-        if (correctSlotId === targetSlotId) {
-            // Correct placement
-            targetSlot.appendChild(draggedPiece);
+        if (!correctSlotElement) {
+            // Should not happen in normal flow
+            console.error("Correct slot element not found!");
+            piecesArea.appendChild(draggedPiece); // Return to pieces area
+            return;
+        }
+
+        // Calculate center of targetSlot (where mouse was released)
+        const targetRect = targetSlot.getBoundingClientRect();
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
+
+        // Calculate center of correctSlotElement
+        const correctRect = correctSlotElement.getBoundingClientRect();
+        const correctCenterX = correctRect.left + correctRect.width / 2;
+        const correctCenterY = correctRect.top + correctRect.height / 2;
+
+        // Calculate distance
+        const distanceX = targetCenterX - correctCenterX;
+        const distanceY = targetCenterY - correctCenterY;
+        const distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
+
+        const tolerance = pieceWidth / 2; // Half the width of a piece
+
+        if (distance <= tolerance && !correctSlotElement.hasChildNodes()) {
+            // Correct placement (within tolerance and correct slot is not occupied)
+            correctSlotElement.appendChild(draggedPiece);
             draggedPiece.setAttribute('draggable', false); // Piece is locked
             draggedPiece.style.cursor = 'default';
-            targetSlot.classList.add('occupied');
-            // targetSlot.innerHTML = ''; // Clear any 'Slot X' text
+            correctSlotElement.classList.add('occupied');
             correctlyPlacedPieces++;
 
             if (correctlyPlacedPieces === totalPieces) {
                 messageArea.textContent = 'You Win!';
             }
         } else {
-            // Incorrect placement - piece automatically returns to piecesArea due to no append elsewhere.
-            // Or, if we want more explicit return: piecesArea.appendChild(draggedPiece);
-            // For now, default behavior is it stays in piecesArea if not dropped correctly.
-            // To make it visually "snap back" if dropped on a wrong slot on the board:
-            // piecesArea.appendChild(draggedPiece); // Add it back to the pieces area
+            // Incorrect placement (either too far, or correct slot is already occupied)
+            // Return piece to piecesArea.
+            // Note: draggedPiece might have been temporarily removed from DOM if it was in piecesArea.
+            // Ensure it's re-appended.
+            if (!draggedPiece.parentNode || draggedPiece.parentNode !== piecesArea) {
+                 piecesArea.appendChild(draggedPiece);
+            }
         }
     }
 
