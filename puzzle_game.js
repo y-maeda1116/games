@@ -4,7 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageArea = document.getElementById('message-area');
     const resetButton = document.getElementById('reset-button');
 
-    const imageUrl = 'images_puzzle_game/smiling_sun.svg';
+    const availableImages = [
+        'images_puzzle_game/smiling_sun.svg',
+        'images_puzzle_game/puzzle_image_1.svg',
+        'images_puzzle_game/puzzle_image_2.svg',
+        'images_puzzle_game/puzzle_image_3.svg',
+        'images_puzzle_game/puzzle_image_4.svg',
+        'images_puzzle_game/puzzle_image_5.svg',
+        'images_puzzle_game/puzzle_image_6.svg',
+        'images_puzzle_game/puzzle_image_7.svg',
+        'images_puzzle_game/puzzle_image_8.svg',
+        'images_puzzle_game/puzzle_image_9.svg',
+        'images_puzzle_game/puzzle_image_10.svg'
+    ];
+    let selectedImageUrl; // Will be set in initGame
+
     const puzzleRows = 3; // For a 3x3 puzzle
     const puzzleCols = 3;
     const totalPieces = puzzleRows * puzzleCols;
@@ -19,6 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let draggedPiece = null;
 
     function initGame() {
+        // Randomly select an image for the puzzle
+        const randomIndex = Math.floor(Math.random() * availableImages.length);
+        selectedImageUrl = availableImages[randomIndex];
+
         // Clear previous game state
         piecesArea.innerHTML = '<p class="area-title">Puzzle Pieces</p>'; // Keep title
         puzzleBoard.innerHTML = '<p class="area-title">Place Pieces Here</p>'; // Keep title
@@ -37,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             piece.classList.add('puzzle-piece');
             piece.style.width = `${pieceWidth}px`;
             piece.style.height = `${pieceHeight}px`;
-            piece.style.backgroundImage = `url(${imageUrl})`;
+            piece.style.backgroundImage = `url(${selectedImageUrl})`;
 
             const row = Math.floor(i / puzzleCols); // 0, 1, or 2 for a 3x3 puzzle
             const col = i % puzzleCols;             // 0, 1, or 2 for a 3x3 puzzle

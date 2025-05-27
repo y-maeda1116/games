@@ -3,16 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageArea = document.getElementById('message-area');
     const resetButton = document.getElementById('reset-button');
 
-    // Theme: Simple animal names (can be replaced with image URLs or unicode characters)
-    // For a 4x3 grid, we need 6 unique items.
-    // Unicode characters for animals:
-    // Cat: 🐱, Dog: 🐶, Fish: 🐠, Bird: 🐦, Lion: 🦁, Elephant: 🐘
-    const items = ['🐱', '🐶', '🐠', '🐦', '🦁', '🐘'];
+    // Difficulty levels and item sets
+    const difficulties = {
+        easy: {
+            items: ['🐱', '🐶', '🐠', '🐦', '🦁', '🐘'], // 6 pairs, 4x3 grid
+            cols: 4,
+        },
+        medium: {
+            items: ['🐱', '🐶', '🐠', '🐦', '🦁', '🐘', '🐼', '🐨', '🦊', '🐻'], // 10 pairs, 5x4 grid
+            cols: 5,
+        },
+        hard: {
+            items: ['🐱', '🐶', '🐠', '🐦', '🦁', '🐘', '🐼', '🐨', '🦊', '🐻', '🐵', '🐸', '🦉', '🦋', '🐞'], // 15 pairs, 6x5 grid
+            cols: 6,
+        }
+    };
+    let currentDifficulty = 'easy'; // Default difficulty
+    let items = difficulties[currentDifficulty].items;
     let gameItems = [...items, ...items]; // Duplicate items to make pairs
 
     let flippedCards = [];
     let matchedPairs = 0;
-    const totalPairs = items.length;
+    let totalPairs = items.length;
 
     // Function to shuffle an array (Fisher-Yates shuffle)
     function shuffle(array) {
@@ -25,6 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to create the game board
     function createBoard() {
+        items = difficulties[currentDifficulty].items;
+        totalPairs = items.length;
+        const cols = difficulties[currentDifficulty].cols;
+        // Adjust card size used in JS to match CSS (70px)
+        gameBoard.style.gridTemplateColumns = `repeat(${cols}, 70px)`;
+
         gameBoard.innerHTML = ''; // Clear previous board
         messageArea.textContent = '';
         matchedPairs = 0;
@@ -98,6 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Reset game
     resetButton.addEventListener('click', createBoard);
+
+    // Difficulty setting function
+    window.setDifficulty = function(level) {
+        currentDifficulty = level;
+        createBoard();
+    }
 
     // Initialize the game
     createBoard();

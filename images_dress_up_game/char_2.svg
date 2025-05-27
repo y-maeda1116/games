@@ -1,0 +1,28 @@
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <rect x="60" y="130" width="80" height="120" fill="#f0f0f0" rx="20" ry="20"/>
+    <!-- Head -->
+    <circle cx="100" cy="100" r="50" fill="#f0f0f0"/>
+
+    <!-- Ears -->
+    <rect x="70" y="15" width="25" height="90" fill="#f0f0f0" rx="12" ry="12"/> <!-- Left outer ear -->
+    <rect x="105" y="15" width="25" height="90" fill="#f0f0f0" rx="12" ry="12"/> <!-- Right outer ear -->
+    <rect x="75" y="25" width="15" height="70" fill="lightpink" rx="7" ry="7"/> <!-- Left inner ear -->
+    <rect x="110" y="25" width="15" height="70" fill="lightpink" rx="7" ry="7"/> <!-- Right inner ear -->
+
+    <!-- Eyes -->
+    <circle cx="80" cy="95" r="10" fill="black"/>
+    <circle cx="120" cy="95" r="10" fill="black"/>
+    <circle cx="83" cy="92" r="3" fill="white"/> <!-- Highlight left -->
+    <circle cx="123" cy="92" r="3" fill="white"/> <!-- Highlight right -->
+
+    <!-- Nose -->
+    <polygon points="95,110 105,110 100,115" fill="pink" stroke="#db7093" stroke-width="0.5"/>
+
+    <!-- Mouth -->
+    <path d="M95 118 Q100 122 105 118" stroke="#db7093" stroke-width="1" fill="transparent"/>
+    
+    <!-- Paws (simple indication) -->
+    <ellipse cx="80" cy="245" rx="15" ry="10" fill="#e0e0e0"/>
+    <ellipse cx="120" cy="245" rx="15" ry="10" fill="#e0e0e0"/>
+</svg>
