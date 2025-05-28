@@ -73,7 +73,10 @@ h1 {
 }
 
 .puzzle-piece {
-    /* Dimensions will be set by JS based on image slice */
+    width: 100px; /* Explicitly set width */
+    height: 100px; /* Explicitly set height */
+    box-sizing: border-box; /* Ensure padding and border are included in width/height */
+    margin: 0; /* Remove any default/inherited margins */
     background-color: #ddd; /* Placeholder */
     border: 1px solid #999;
     cursor: grab;
