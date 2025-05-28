@@ -1,3 +1,10 @@
+// Declare global setDifficulty function on Window object
+declare global {
+    interface Window {
+        setDifficulty: (level: string) => void;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.getElementById('game-board') as HTMLDivElement;
     const messageArea = document.getElementById('message-area') as HTMLDivElement;
@@ -135,10 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Difficulty setting function
-    (window as any).setDifficulty = function(level: string): void {
+    window.setDifficulty = function(level: string): void {
         currentDifficulty = level;
         createBoard();
-    }
+    };
 
     // Initialize the game
     createBoard();
