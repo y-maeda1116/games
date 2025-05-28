@@ -1,10 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const gameBoard = document.getElementById('game-board');
-    const messageArea = document.getElementById('message-area');
-    const resetButton = document.getElementById('reset-button');
+    const gameBoard = document.getElementById('game-board') as HTMLDivElement;
+    const messageArea = document.getElementById('message-area') as HTMLDivElement;
+    const resetButton = document.getElementById('reset-button') as HTMLButtonElement;
+
+    // Define Interfaces
+    interface Difficulty {
+        items: string[];
+        cols: number;
+    }
+
+    interface Difficulties {
+        [key: string]: Difficulty;
+    }
 
     // Difficulty levels and item sets
-    const difficulties = {
+    const difficulties: Difficulties = {
         easy: {
             items: ['🐱', '🐶', '🐠', '🐦', '🦁', '🐘'], // 6 pairs, 4x3 grid
             cols: 4,
@@ -18,16 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
             cols: 6,
         }
     };
-    let currentDifficulty = 'easy'; // Default difficulty
-    let items = difficulties[currentDifficulty].items;
-    let gameItems = [...items, ...items]; // Duplicate items to make pairs
+    let currentDifficulty: string = 'easy'; // Default difficulty
+    let items: string[] = difficulties[currentDifficulty].items;
+    let gameItems: string[] = [...items, ...items]; // Duplicate items to make pairs
 
-    let flippedCards = [];
-    let matchedPairs = 0;
-    let totalPairs = items.length;
+    let flippedCards: HTMLDivElement[] = [];
+    let matchedPairs: number = 0;
+    let totalPairs: number = items.length;
 
     // Function to shuffle an array (Fisher-Yates shuffle)
-    function shuffle(array) {
+    function shuffle<T>(array: T[]): T[] {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
@@ -36,23 +46,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Function to create the game board
-    function createBoard() {
+    function createBoard(): void {
         items = difficulties[currentDifficulty].items;
         totalPairs = items.length;
-        const cols = difficulties[currentDifficulty].cols;
+        const cols: number = difficulties[currentDifficulty].cols;
         // Adjust card size used in JS to match CSS (70px)
-        gameBoard.style.gridTemplateColumns = `repeat(${cols}, 70px)`;
-
-        gameBoard.innerHTML = ''; // Clear previous board
-        messageArea.textContent = '';
+        if (gameBoard) {
+            gameBoard.style.gridTemplateColumns = `repeat(${cols}, 70px)`;
+            gameBoard.innerHTML = ''; // Clear previous board
+        }
+        if (messageArea) {
+            messageArea.textContent = '';
+        }
         matchedPairs = 0;
         flippedCards = [];
         gameItems = shuffle([...items, ...items]);
 
         gameItems.forEach((item, index) => {
-            const card = document.createElement('div');
+            const card = document.createElement('div') as HTMLDivElement;
             card.classList.add('card');
-            card.dataset.id = index; // Unique ID for each card
+            card.dataset.id = String(index); // Unique ID for each card
             card.dataset.item = item; // The item this card represents
 
             // Create card front (visible when not flipped)
@@ -68,14 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
             card.appendChild(cardFront);
             card.appendChild(cardBack);
 
-            card.addEventListener('click', handleCardClick);
-            gameBoard.appendChild(card);
+            card.addEventListener('click', handleCardClick as EventListener);
+            if (gameBoard) {
+                gameBoard.appendChild(card);
+            }
         });
     }
 
     // Function to handle card click
-    function handleCardClick(event) {
-        const clickedCard = event.currentTarget;
+    function handleCardClick(event: MouseEvent): void {
+        const clickedCard = event.currentTarget as HTMLDivElement;
 
         // Ignore click if card is already flipped or matched
         if (flippedCards.length === 2 || clickedCard.classList.contains('flipped') || clickedCard.classList.contains('matched')) {
@@ -91,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Function to check for a match
-    function checkForMatch() {
+    function checkForMatch(): void {
         const [card1, card2] = flippedCards;
 
         if (card1.dataset.item === card2.dataset.item) {
@@ -101,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             matchedPairs++;
             flippedCards = [];
 
-            if (matchedPairs === totalPairs) {
+            if (matchedPairs === totalPairs && messageArea) {
                 messageArea.textContent = 'You Win!';
             }
         } else {
@@ -115,10 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Reset game
-    resetButton.addEventListener('click', createBoard);
+    if (resetButton) {
+        resetButton.addEventListener('click', createBoard);
+    }
 
     // Difficulty setting function
-    window.setDifficulty = function(level) {
+    (window as any).setDifficulty = function(level: string): void {
         currentDifficulty = level;
         createBoard();
     }
