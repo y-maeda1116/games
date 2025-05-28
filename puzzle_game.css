@@ -41,12 +41,14 @@ h1 {
 }
 
 .pieces-area {
-    width: 350px; /* Fixed width: (100px * 3 pieces) + (10px * 2 gaps) + (15px * 2 padding) */
-    display: flex;
-    flex-wrap: wrap; /* Allow pieces to wrap */
-    justify-content: flex-start; /* Align pieces to the start of the line */
-    align-content: flex-start; /* Align lines to the start of the container */
-    gap: 10px; /* Spacing between pieces */
+    width: 350px; /* Fixed width: (100px * 3 columns) + (10px * 2 gaps) + (15px * 2 padding) */
+    display: grid;
+    grid-template-columns: repeat(3, 100px); /* 3 columns, each 100px wide */
+    gap: 10px; /* Spacing between pieces (grid gaps) */
+    /* align-content: flex-start; Remove flexbox specific property */
+    /* justify-content: flex-start; Remove flexbox specific property */
+    /* flex-wrap: wrap; Remove flexbox specific property */
+    /* Default grid alignment (stretch) should be fine for items filling cells */
 }
 
 .puzzle-board {
