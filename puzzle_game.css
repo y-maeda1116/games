@@ -50,8 +50,9 @@ h1 {
 }
 
 .puzzle-board {
-    width: 55%; /* Adjust as needed, allowing space for pieces */
-    min-width: 340px; /* (100px * 3 pieces) + (5px * 2 gaps) + (15px * 2 padding) */
+    /* width: 55%; */
+    width: 340px; /* Fixed width for 3x3 grid with 100px pieces, 5px gaps, 15px padding */
+    /* min-width: 340px; /* (100px * 3 pieces) + (5px * 2 gaps) + (15px * 2 padding) */ */
     display: grid;
     /* grid-template-columns and grid-template-rows are set by JS */
     gap: 5px; /* Small gap between slots */
