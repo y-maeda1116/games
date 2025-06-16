@@ -1,0 +1,112 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0e68c; /* Khaki */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    color: #8b4513; /* SaddleBrown */
+}
+
+#game-info {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    width: 300px; /* Or adjust as needed */
+    display: flex;
+    justify-content: space-between;
+}
+
+#game-board {
+    width: 360px; /* e.g., 3 holes * (100px width + 2*10px padding/margin) */
+    height: 360px;
+    background-color: #a0522d; /* Sienna - ground color */
+    border: 5px solid #8b4513; /* SaddleBrown - border */
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* For a 3x3 grid */
+    grid-template-rows: repeat(3, 1fr);
+    gap: 15px; /* Space between holes */
+    padding: 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.hole {
+    background-color: #5c3c10; /* Darker brown for hole */
+    border-radius: 50%; /* Circular holes */
+    position: relative;
+    overflow: hidden; /* Moles shouldn't appear outside their hole */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #4a2f0c;
+}
+
+.mole {
+    width: 70%; /* Relative to hole size */
+    height: 70%;
+    background-color: #d2b48c; /* Tan - mole color */
+    border-radius: 50%;
+    border: 2px solid #8b5a2b;
+    position: absolute; /* Positioned within the hole */
+    bottom: -100%; /* Initially hidden below */
+    transition: bottom 0.2s ease-in-out; /* Smooth appearance */
+    display: flex; /* For potential mole features like eyes */
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.mole.up {
+    bottom: 15%; /* Position when mole is up */
+}
+
+/* Simple eyes for the mole */
+.mole::before, .mole::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: black;
+    top: 30%;
+}
+.mole::before { left: 30%; }
+.mole::after { right: 30%; }
+
+
+/* Visual feedback for a whacked mole */
+.hole.whacked .mole {
+    background-color: #ff4500; /* Orangey-red when whacked */
+    transform: scale(0.9);
+    transition: background-color 0.1s, transform 0.1s;
+}
+/* Could also add a temporary animation to the hole itself */
+
+
+#start-button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #20c997; /* Turquoise */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#start-button:hover {
+    background-color: #1baa80; /* Darker Turquoise */
+}
+
+#start-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
