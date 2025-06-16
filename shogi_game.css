@@ -152,3 +152,8 @@ h1 {
 .selected-for-drop { /* Style for selected captured piece */
     box-shadow: 0 0 5px 2px yellow;
 }
+
+.square.valid-move-highlight {
+    background-color: rgba(46, 204, 113, 0.5); /* Semi-transparent light green */
+    cursor: pointer; /* Reinforce that it's a clickable target */
+}
