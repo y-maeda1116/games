@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Game</title>
+    <link rel="stylesheet" href="rhythm_game.css">
+</head>
+<body>
+    <h1>Rhythm Game</h1>
+
+    <div id="score-board">
+        Score: <span id="score">0</span>
+    </div>
+
+    <div id="game-area">
+        <div class="lane" id="lane-0" data-key="D">D</div>
+        <div class="lane" id="lane-1" data-key="F">F</div>
+        <div class="lane" id="lane-2" data-key="J">J</div>
+        <div class="lane" id="lane-3" data-key="K">K</div>
+        <div class="target-zone" id="target-zone-0"></div>
+        <div class="target-zone" id="target-zone-1"></div>
+        <div class="target-zone" id="target-zone-2"></div>
+        <div class="target-zone" id="target-zone-3"></div>
+    </div>
+
+    <button id="start-button">Start Game</button>
+
+    <script src="rhythm_game.js"></script>
+</body>
+</html>

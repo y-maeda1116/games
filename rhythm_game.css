@@ -1,0 +1,120 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #222;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    color: #ff69b4; /* HotPink */
+}
+
+#score-board {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+#game-area {
+    width: 400px; /* Adjust as needed */
+    height: 600px; /* Adjust as needed */
+    background-color: #333;
+    border: 2px solid #555;
+    position: relative; /* For positioning notes and target zones */
+    overflow: hidden; /* Notes disappear if they go outside */
+    margin-bottom: 20px;
+    display: flex; /* To arrange lanes */
+    justify-content: space-around; /* Distribute lanes evenly */
+}
+
+.lane {
+    width: 24%; /* Slightly less than 25% for some spacing if needed, or use gap */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+    position: relative; /* For note positioning within lane */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Key names at the bottom */
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 10px; /* Space for the key name */
+    box-sizing: border-box;
+}
+.lane:first-child { border-left: none; }
+.lane:last-child { border-right: none; }
+
+
+.target-zone {
+    position: absolute;
+    bottom: 10%; /* Position of the target zone from the bottom */
+    width: 24%; /* Should match lane width concept */
+    height: 10px; /* Height of the target line/zone */
+    background-color: rgba(255, 105, 180, 0.5); /* Semi-transparent HotPink */
+    /* This is a bit tricky with flex lanes. Let's position them manually based on lane positions.
+       Alternatively, each lane could contain its own target zone element.
+       For now, JS will handle hit detection based on note position,
+       and these zones are more visual guides.
+    */
+}
+
+/* Manually position target zones to align with lanes (example for 4 lanes) */
+#target-zone-0 { left: 0%; margin-left: 0.5%; } /* Approximation */
+#target-zone-1 { left: 25%; margin-left: 0.5%;}
+#target-zone-2 { left: 50%; margin-left: 0.5%;}
+#target-zone-3 { left: 75%; margin-left: 0.5%;}
+
+
+.note {
+    position: absolute;
+    width: 80%; /* Relative to the lane width */
+    height: 20px;
+    background-color: #00ffff; /* Cyan */
+    border: 1px solid #00dddd;
+    border-radius: 5px;
+    left: 10%; /* Centered within the lane */
+    top: 0; /* Starts at the top */
+    /* JS will animate the 'top' property */
+}
+
+/* Visual feedback styles (placeholders) */
+.note.hit {
+    background-color: #00ff00; /* Green for hit */
+    opacity: 0.5;
+}
+
+.note.missed {
+    background-color: #ff0000; /* Red for missed */
+    opacity: 0.5;
+}
+
+.lane.feedback-hit {
+    /* Example: brief flash on the target zone or lane background */
+    animation: lane-hit-feedback 0.2s;
+}
+
+@keyframes lane-hit-feedback {
+    0% { background-color: rgba(0, 255, 0, 0.3); }
+    100% { background-color: rgba(0, 0, 0, 0.2); } /* Original lane background */
+}
+
+
+#start-button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #ff69b4; /* HotPink */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#start-button:hover {
+    background-color: #ff1493; /* DeepPink */
+}

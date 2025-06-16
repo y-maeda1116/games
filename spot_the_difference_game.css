@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#game-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; /* Space between the two image wrappers */
+    margin-bottom: 20px;
+}
+
+.image-wrapper {
+    position: relative; /* For positioning the canvas overlay */
+    border: 1px solid #ccc;
+}
+
+.image-wrapper img {
+    display: block; /* Remove extra space below image */
+    max-width: 100%; /* Ensure images are responsive if they are larger than container */
+    height: auto;
+}
+
+.image-wrapper canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Make canvas same size as image via JS later */
+    height: 100%;/* Make canvas same size as image via JS later */
+    pointer-events: auto; /* Clicks should go to canvas to detect differences */
+    /* border: 1px dashed red; */ /* For debugging canvas position */
+}
+
+
+#message-area {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #555;
+    text-align: center;
+}
+
+#message-area p {
+    margin: 5px 0;
+}
+
+/* Styles for highlighting differences (will be drawn by JS on canvas) */
+/* Example: .difference-highlight (if using CSS classes on dynamically added elements) */
+/* For canvas drawing, these are conceptual: */
+/* - strokeStyle = 'red' */
+/* - lineWidth = 2 */
+/* - noFill() for circles */
+
+.found-difference-circle { /* This class is conceptual for JS, not directly applied to canvas elements */
+    border: 3px solid red;
+    border-radius: 50%;
+    position: absolute; /* If we were to use HTML elements for highlights */
+    pointer-events: none; /* So it doesn't interfere with image clicks */
+}

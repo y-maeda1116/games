@@ -1,0 +1,131 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e6e6fa; /* Lavender */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    color: #483d8b; /* DarkSlateBlue */
+    margin-bottom: 30px;
+}
+
+#quiz-container {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 600px;
+}
+
+#question-area {
+    margin-bottom: 20px;
+}
+
+#question-text {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #2c3e50; /* Dark blue/grey */
+}
+
+#question-display-item {
+    font-size: 3.5em; /* Larger for displaying characters like '５' or 'あ' */
+    font-weight: bold;
+    color: #2980b9; /* Blue */
+    margin-bottom: 20px;
+    min-height: 60px; /* Ensure space even if item is small */
+}
+
+#options-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive columns */
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#options-area button {
+    padding: 12px 15px;
+    font-size: 1.1em;
+    background-color: #3498db; /* Peter River Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#options-area button:hover {
+    background-color: #2980b9; /* Belize Hole Blue */
+}
+
+#options-area button:active {
+    transform: scale(0.98);
+}
+
+#options-area button.disabled {
+    background-color: #bdc3c7; /* Silver */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+#options-area button.correct {
+    background-color: #2ecc71; /* Emerald Green */
+}
+
+#options-area button.incorrect {
+    background-color: #e74c3c; /* Alizarin Red */
+}
+
+
+#feedback-area {
+    margin-bottom: 20px;
+    min-height: 25px; /* Reserve space for feedback text */
+}
+
+#feedback-text {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#feedback-text.correct {
+    color: #27ae60; /* Nephritis Green */
+}
+
+#feedback-text.incorrect {
+    color: #c0392b; /* Pomegranate Red */
+}
+
+#score-area {
+    font-size: 1.3em;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+#start-quiz-button, #next-question-button {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    color: white;
+    background-color: #6610f2; /* Indigo */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#start-quiz-button:hover, #next-question-button:hover {
+    background-color: #5108d8; /* Darker Indigo */
+}
+
+#next-question-button {
+    background-color: #1abc9c; /* Turquoise */
+}
+#next-question-button:hover {
+    background-color: #16a085; /* Greensea */
+}
