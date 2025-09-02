@@ -1,11 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const characterImage = document.getElementById('character-image');
-    const wardrobeArea = document.getElementById('wardrobe-area');
-    const resetButton = document.getElementById('reset-button');
-    const snapZones = document.querySelectorAll('.snap-zone');
-    const characterSelect = document.getElementById('character-select');
+    // Define Interfaces
+    interface Character {
+        id: string;
+        name: string;
+        src: string;
+    }
 
-    const characters = [
+    interface ClothingItem {
+        id: string;
+        name: string;
+        src: string;
+        category: string;
+    }
+
+    const characterImage = document.getElementById('character-image') as HTMLImageElement;
+    const wardrobeArea = document.getElementById('wardrobe-area') as HTMLDivElement;
+    const resetButton = document.getElementById('reset-button') as HTMLButtonElement;
+    const snapZones = document.querySelectorAll('.snap-zone') as NodeListOf<HTMLDivElement>;
+    const characterSelect = document.getElementById('character-select') as HTMLSelectElement;
+
+    const characters: Character[] = [
         { id: 'bear', name: 'Bear', src: 'images_dress_up_game/bear_char.svg' },
         { id: 'char1', name: 'Cat', src: 'images_dress_up_game/char_1.svg' },
         { id: 'char2', name: 'Rabbit', src: 'images_dress_up_game/char_2.svg' },
@@ -19,17 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'char10', name: 'Knight', src: 'images_dress_up_game/char_10.svg' }
     ];
 
-    const clothingItems = [
+    const clothingItems: ClothingItem[] = [
         { id: 'hat1', name: 'Red Cap', src: 'images_dress_up_game/hat_red.svg', category: 'hat' },
         { id: 'shirt1', name: 'Blue T-Shirt', src: 'images_dress_up_game/shirt_blue.svg', category: 'shirt' },
         { id: 'pants1', name: 'Green Shorts', src: 'images_dress_up_game/pants_green.svg', category: 'pants' },
         { id: 'glasses1', name: 'Black Glasses', src: 'images_dress_up_game/glasses_black.svg', category: 'glasses' }
     ];
 
-    let draggedItem = null; // To store the data of the item being dragged
+    let draggedItem: ClothingItem | null = null; // To store the data of the item being dragged
 
     // 1. Populate Wardrobe
-    function populateWardrobe() {
+    function populateWardrobe(): void {
         // Clear existing items except the title
         const title = wardrobeArea.querySelector('h2');
         wardrobeArea.innerHTML = '';
@@ -38,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clothingItems.forEach(item => {
             const itemDiv = document.createElement('div');
             itemDiv.classList.add('wardrobe-item');
-            itemDiv.setAttribute('draggable', true);
+            itemDiv.setAttribute('draggable', 'true');
             itemDiv.dataset.itemId = item.id; // Store item id
 
             const itemImg = document.createElement('img');
@@ -46,49 +60,58 @@ document.addEventListener('DOMContentLoaded', () => {
             itemImg.alt = item.name;
             itemDiv.appendChild(itemImg);
 
-            itemDiv.addEventListener('dragstart', handleDragStart);
+            itemDiv.addEventListener('dragstart', handleDragStart as EventListener);
             wardrobeArea.appendChild(itemDiv);
         });
     }
 
     // 2. Drag and Drop Handlers
-    function handleDragStart(event) {
-        const itemId = event.target.dataset.itemId;
-        draggedItem = clothingItems.find(item => item.id === itemId);
-        event.dataTransfer.setData('text/plain', itemId); // For some browsers
-        event.dataTransfer.effectAllowed = 'move';
-    }
-
-    snapZones.forEach(zone => {
-        zone.addEventListener('dragover', handleDragOver);
-        zone.addEventListener('dragleave', handleDragLeave);
-        zone.addEventListener('drop', handleDrop);
-    });
-
-    function handleDragOver(event) {
-        event.preventDefault();
-        const targetZone = event.target.closest('.snap-zone');
-        if (targetZone && draggedItem && targetZone.dataset.category === draggedItem.category) {
-            targetZone.classList.add('drag-over-zone');
-            event.dataTransfer.dropEffect = 'move';
-        } else {
-            event.dataTransfer.dropEffect = 'none';
+    function handleDragStart(event: DragEvent): void {
+        const target = event.target as HTMLDivElement;
+        const itemId = target.dataset.itemId;
+        draggedItem = clothingItems.find(item => item.id === itemId) || null;
+        if (event.dataTransfer && itemId) {
+            event.dataTransfer.setData('text/plain', itemId);
+            event.dataTransfer.effectAllowed = 'move';
         }
     }
 
-    function handleDragLeave(event) {
-        const targetZone = event.target.closest('.snap-zone');
+    snapZones.forEach(zone => {
+        zone.addEventListener('dragover', handleDragOver as EventListener);
+        zone.addEventListener('dragleave', handleDragLeave as EventListener);
+        zone.addEventListener('drop', handleDrop as EventListener);
+    });
+
+    function handleDragOver(event: DragEvent): void {
+        event.preventDefault();
+        const targetZone = (event.target as Element).closest<HTMLDivElement>('.snap-zone');
+        if (targetZone && draggedItem && targetZone.dataset.category === draggedItem.category) {
+            targetZone.classList.add('drag-over-zone');
+            if (event.dataTransfer) {
+                event.dataTransfer.dropEffect = 'move';
+            }
+        } else {
+            if (event.dataTransfer) {
+                event.dataTransfer.dropEffect = 'none';
+            }
+        }
+    }
+
+    function handleDragLeave(event: DragEvent): void {
+        const targetZone = (event.target as Element).closest<HTMLDivElement>('.snap-zone');
         if (targetZone) {
             targetZone.classList.remove('drag-over-zone');
         }
     }
 
-    function handleDrop(event) {
+    function handleDrop(event: DragEvent): void {
         event.preventDefault();
-        const targetZone = event.target.closest('.snap-zone');
+        const targetZone = (event.target as Element).closest<HTMLDivElement>('.snap-zone');
+        if (!targetZone) return;
+
         targetZone.classList.remove('drag-over-zone');
 
-        if (!draggedItem || !targetZone || targetZone.dataset.category !== draggedItem.category) {
+        if (!draggedItem || targetZone.dataset.category !== draggedItem.category) {
             draggedItem = null;
             return; // Invalid drop
         }
@@ -106,16 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
         targetZone.appendChild(itemImg);
 
         // Add click listener to remove item from character
-        itemImg.addEventListener('click', handleRemoveItemFromCharacter);
+        itemImg.addEventListener('click', handleRemoveItemFromCharacter as EventListener);
 
         // Optional: Hide item from wardrobe or mark as used (not implemented for simplicity of re-use)
         draggedItem = null; // Clear dragged item
     }
 
     // 3. Remove Item from Character (by clicking on it)
-    function handleRemoveItemFromCharacter(event) {
-        const itemToRemoveImg = event.target;
-        const parentZone = itemToRemoveImg.closest('.snap-zone');
+    function handleRemoveItemFromCharacter(event: MouseEvent): void {
+        const itemToRemoveImg = event.target as HTMLImageElement;
+        const parentZone = itemToRemoveImg.closest<HTMLDivElement>('.snap-zone');
 
         if (parentZone) {
             parentZone.innerHTML = ''; // Remove item from the character display
@@ -125,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Reset Outfit Function (used by button and character change)
-    function resetOutfit() {
+    function resetOutfit(): void {
         snapZones.forEach(zone => {
             zone.innerHTML = ''; // Clear all items from character
         });
@@ -134,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.addEventListener('click', resetOutfit);
 
     // 5. Populate Character Selection Dropdown
-    function populateCharacterSelect() {
+    function populateCharacterSelect(): void {
         characters.forEach(character => {
             const option = document.createElement('option');
             option.value = character.src;
@@ -147,8 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 6. Handle Character Change
-    characterSelect.addEventListener('change', (event) => {
-        const selectedSrc = event.target.value;
+    characterSelect.addEventListener('change', (event: Event) => {
+        const selectedSrc = (event.target as HTMLSelectElement).value;
         characterImage.src = selectedSrc;
         characterImage.alt = characterSelect.options[characterSelect.selectedIndex].text; // Update alt text
         resetOutfit(); // Clear clothes when character changes
@@ -159,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     populateCharacterSelect();
     // Ensure initial character alt text is set correctly (though it's set in HTML initially)
     const initialCharacter = characters.find(c => c.src === characterImage.src);
-    if (initialCharacter) {
+    if (initialCharacter && characterImage) {
         characterImage.alt = initialCharacter.name;
     }
 });
