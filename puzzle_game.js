@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Configure puzzle board grid
         puzzleBoard.style.gridTemplateColumns = `repeat(${puzzleCols}, ${pieceWidth}px)`;
-        puzzleBoard.style.gridTemplateRows = `repeat(${puzzleRows}, ${pieceHeight}px)`;
+        puzzleBoard.style.gridTemplateRows = `auto repeat(${puzzleRows}, ${pieceHeight}px)`;
 
         let pieces = [];
 
@@ -89,8 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
             slot.addEventListener('drop', handleDrop);
         }
 
-        // Shuffle pieces and add to pieces area
-        shuffleArray(pieces).forEach(piece => {
+        // Add pieces to pieces area in order (no shuffling)
+        pieces.forEach(piece => {
             piecesArea.appendChild(piece);
             // Add drag listeners to pieces
             piece.addEventListener('dragstart', handleDragStart);
@@ -197,7 +197,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Reset button
+    // Shuffle pieces function
+    function shufflePieces() {
+        // Get all pieces currently in the pieces area
+        const pieces = Array.from(piecesArea.querySelectorAll('.puzzle-piece'));
+        
+        // Remove all pieces from pieces area (except title)
+        pieces.forEach(piece => piece.remove());
+        
+        // Shuffle the pieces array
+        shuffleArray(pieces);
+        
+        // Add shuffled pieces back to pieces area
+        pieces.forEach(piece => {
+            piecesArea.appendChild(piece);
+        });
+    }
+
+    // Button event listeners
+    const shuffleButton = document.getElementById('shuffle-button');
+    shuffleButton.addEventListener('click', shufflePieces);
     resetButton.addEventListener('click', initGame);
 
     // Initialize the game
