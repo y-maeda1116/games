@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.getElementById('game-board');
     const messageArea = document.getElementById('message-area');
     const resetButton = document.getElementById('reset-button');
+    const homeButton = document.getElementById('homeButton');
 
     // Difficulty levels and item sets
     const difficulties = {
@@ -122,6 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
         currentDifficulty = level;
         createBoard();
     }
+
+    // Home button event listener
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
 
     // Initialize the game
     createBoard();

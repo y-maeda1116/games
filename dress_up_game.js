@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const characterImage = document.getElementById('character-image');
     const wardrobeArea = document.getElementById('wardrobe-area');
+    const homeButton = document.getElementById('homeButton');
     const resetButton = document.getElementById('reset-button');
     const snapZones = document.querySelectorAll('.snap-zone');
     const characterSelect = document.getElementById('character-select');
@@ -156,6 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Game
     populateWardrobe();
+    // Home button event listener
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
     populateCharacterSelect();
     // Ensure initial character alt text is set correctly (though it's set in HTML initially)
     const initialCharacter = characters.find(c => c.src === characterImage.src);

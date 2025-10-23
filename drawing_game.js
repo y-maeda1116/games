@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const redoButton = document.getElementById('redo');
     const saveButton = document.getElementById('save');
     const clearButton = document.getElementById('clear');
+    const homeButton = document.getElementById('homeButton');
     
     // New elements
     const presetColors = document.querySelectorAll('.color-btn');
@@ -279,6 +280,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clearButton.addEventListener('click', () => {
         clearCanvas();
+    });
+
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
     });
 
     // --- Initial setup ---

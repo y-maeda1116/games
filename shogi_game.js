@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const boardContainer = document.getElementById('game-board-container');
+    const homeButton = document.getElementById('homeButton');
     const playerTurnElement = document.getElementById('player-turn');
     const newGameButton = document.getElementById('new-game-btn');
     const senteCapturedContainer = document.getElementById('sente-captured-pieces');
@@ -92,6 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startGame(){console.log("New Game started");initializeBoard();}
     // Initial call to set mode from checkbox state
+    // Home button event listener
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
     isHighlightModeEnabled = highlightModeCheckbox.checked;
     startGame();
 });

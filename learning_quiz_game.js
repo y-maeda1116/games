@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const questionTextElement = document.getElementById('question-text');
     const questionDisplayItemElement = document.getElementById('question-display-item');
+    const homeButton = document.getElementById('homeButton');
     const optionsArea = document.getElementById('options-area');
     const feedbackTextElement = document.getElementById('feedback-text');
     const scoreElement = document.getElementById('score');
@@ -140,6 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
     questionTextElement.textContent = 'Press "Start Quiz" to begin.';
     questionDisplayItemElement.textContent = '🧠';
     optionsArea.innerHTML = '';
+    // Home button event listener
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
     feedbackTextElement.textContent = '';
     scoreElement.textContent = '0';
 });

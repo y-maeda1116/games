@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const imageA = document.getElementById('imageA');
     const imageB = document.getElementById('imageB');
+    const homeButton = document.getElementById('homeButton');
     const canvasA = document.getElementById('canvasA');
     const canvasB = document.getElementById('canvasB');
     const ctxA = canvasA.getContext('2d');
@@ -126,6 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listeners for clicks on both canvases
     canvasA.addEventListener('click', handleImageClick);
     canvasB.addEventListener('click', handleImageClick);
+
+    // Home button event listener
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
 
     // Optional: Recalculate canvas sizes on window resize if layout is responsive
     window.addEventListener('resize', setupCanvases);

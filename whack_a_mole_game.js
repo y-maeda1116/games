@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.getElementById('game-board');
     const scoreDisplay = document.getElementById('score');
+    const homeButton = document.getElementById('homeButton');
     const timeLeftDisplay = document.getElementById('time-left');
     const startButton = document.getElementById('start-button');
 
@@ -135,6 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial setup
     updateTimeLeftDisplay(); // Show initial time
+    // Home button event listener
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
     startButton.addEventListener('click', startGame);
     // createGameBoard(); // Create board initially so it's visible, or do it in startGame for fresh setup
 });

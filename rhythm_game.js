@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gameArea = document.getElementById('game-area');
     const scoreDisplay = document.getElementById('score');
+    const homeButton = document.getElementById('homeButton');
     const startButton = document.getElementById('start-button');
     const lanes = [
         document.getElementById('lane-0'),
@@ -163,6 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.removeEventListener('keyup', handleKeyRelease);
         alert("Game Over! Your score: " + score);
     }
+
+    // Home button event listener
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
 
     startButton.addEventListener('click', startGame);
 });

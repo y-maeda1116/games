@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const puzzleBoard = document.getElementById('puzzle-board');
     const messageArea = document.getElementById('message-area');
     const resetButton = document.getElementById('reset-button');
+    const homeButton = document.getElementById('homeButton');
 
     const availableImages = [
         'images_puzzle_game/smiling_sun.svg',
@@ -218,6 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const shuffleButton = document.getElementById('shuffle-button');
     shuffleButton.addEventListener('click', shufflePieces);
     resetButton.addEventListener('click', initGame);
+
+    // Home button
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
 
     // Initialize the game
     initGame();

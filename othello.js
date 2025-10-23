@@ -3,6 +3,7 @@ console.log("Othello game script loaded.");
 document.addEventListener('DOMContentLoaded', () => {
     const boardElement = document.getElementById('board');
     const gameInfoElement = document.getElementById('game-info');
+    const homeButton = document.getElementById('homeButton');
     const pvpButton = document.getElementById('player-vs-player');
     const pvaButton = document.getElementById('player-vs-ai');
 
@@ -308,6 +309,11 @@ document.addEventListener('DOMContentLoaded', () => {
     pvaButton.addEventListener('click', () => startGame('pva'));
 
     // Initial message before game starts
+    // Home button event listener
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
     gameInfoElement.textContent = "Select a game mode to start.";
     // No board is rendered initially until a mode is selected.
 });
