@@ -5,7 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fun Games for Kids! 🎮</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
         
         * {
             margin: 0;
@@ -14,15 +34,15 @@
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--gray-50) 0%, #e0e7ff 50%, var(--gray-100) 100%);
             min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
+            padding: 2rem 1rem;
+            color: var(--gray-800);
+            line-height: 1.6;
         }
 
-        /* 背景アニメーション */
+        /* モダンな背景パターン */
         body::before {
             content: '';
             position: fixed;
@@ -30,15 +50,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="90" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="30" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
-            animation: float 20s ease-in-out infinite;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
             pointer-events: none;
             z-index: -1;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
         }
 
         .container {
@@ -60,25 +76,24 @@
         }
 
         h1 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 3.5em;
-            color: #fff;
-            text-shadow: 3px 3px 0px #ff6b6b, 6px 6px 0px #4ecdc4;
-            margin-bottom: 10px;
-            animation: rainbow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes rainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
         }
 
         .subtitle {
-            font-size: 1.4em;
-            color: #fff;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            font-weight: 500;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .games-grid {
@@ -95,112 +110,91 @@
         }
 
         .game-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 25px;
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
             text-decoration: none;
-            color: #333;
+            color: var(--gray-800);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid var(--gray-200);
             position: relative;
             overflow: hidden;
-            border: 3px solid transparent;
         }
 
         .game-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
         }
 
         .game-card:hover::before {
-            left: 100%;
+            transform: scaleX(1);
         }
 
         .game-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            border-color: var(--gray-300);
         }
 
         .game-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             display: block;
-            animation: bounce 2s infinite;
+            transition: transform 0.3s ease;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        .game-card:hover .game-icon {
+            transform: scale(1.1);
         }
 
         .game-title {
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #333;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
         }
 
         .game-description {
-            font-size: 0.95em;
-            color: #666;
-            line-height: 1.4;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.5;
         }
 
-        /* ゲーム別カラー */
-        .matching-game { border-color: #28a745; }
-        .matching-game:hover { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
-
-        .puzzle-game { border-color: #ffc107; }
-        .puzzle-game:hover { background: linear-gradient(135deg, #ffc107, #fd7e14); color: white; }
-
-        .dress-up-game { border-color: #6f42c1; }
-        .dress-up-game:hover { background: linear-gradient(135deg, #6f42c1, #e83e8c); color: white; }
-
-        .othello-game { border-color: #fd7e14; }
-        .othello-game:hover { background: linear-gradient(135deg, #fd7e14, #dc3545); color: white; }
-
-        .shogi-game { border-color: #6610f2; }
-        .shogi-game:hover { background: linear-gradient(135deg, #6610f2, #6f42c1); color: white; }
-
-        .drawing-game { border-color: #17a2b8; }
-        .drawing-game:hover { background: linear-gradient(135deg, #17a2b8, #20c997); color: white; }
-
-        .spot-game { border-color: #dc3545; }
-        .spot-game:hover { background: linear-gradient(135deg, #dc3545, #e83e8c); color: white; }
-
-        .rhythm-game { border-color: #ff69b4; }
-        .rhythm-game:hover { background: linear-gradient(135deg, #ff69b4, #ff1493); color: white; }
-
-        .whack-game { border-color: #20c997; }
-        .whack-game:hover { background: linear-gradient(135deg, #20c997, #17a2b8); color: white; }
-
-        .quiz-game { border-color: #007bff; }
-        .quiz-game:hover { background: linear-gradient(135deg, #007bff, #6610f2); color: white; }
+        /* ゲーム別アクセントカラー */
+        .matching-game::before { background: linear-gradient(90deg, var(--success), #059669); }
+        .puzzle-game::before { background: linear-gradient(90deg, var(--warning), #d97706); }
+        .dress-up-game::before { background: linear-gradient(90deg, var(--secondary), #7c3aed); }
+        .othello-game::before { background: linear-gradient(90deg, #f97316, var(--error)); }
+        .shogi-game::before { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+        .drawing-game::before { background: linear-gradient(90deg, var(--accent), var(--success)); }
+        .spot-game::before { background: linear-gradient(90deg, var(--error), #dc2626); }
+        .rhythm-game::before { background: linear-gradient(90deg, #ec4899, #be185d); }
+        .whack-game::before { background: linear-gradient(90deg, var(--accent), #0891b2); }
+        .quiz-game::before { background: linear-gradient(90deg, var(--primary), var(--accent)); }
 
         footer {
-            margin-top: 40px;
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9em;
-            animation: fadeIn 1s ease-out 1s both;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            margin-top: 4rem;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
         /* レスポンシブ対応 */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5em; }
-            .games-grid { grid-template-columns: 1fr; }
-            .game-card { padding: 20px; }
+            body { padding: 1rem; }
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.125rem; margin-bottom: 2rem; }
+            .games-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .game-card { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -275,7 +269,7 @@
     </div>
 
         <footer>
-            <p>🌈 Made with ❤️ for amazing kids! &copy; 2024 Fun Games Collection 🌈</p>
+            <p>Made with ❤️ for amazing kids! &copy; 2024 Fun Games Collection</p>
         </footer>
 </body>
 </html>
