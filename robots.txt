@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://y-maeda1116.github.io/games/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

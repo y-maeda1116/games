@@ -1,0 +1,34 @@
+{
+  "name": "Fun Games for Kids",
+  "short_name": "Kids Games",
+  "description": "Collection of 10 fun, educational browser games for kids aged 5+",
+  "start_url": "/games/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#6366f1",
+  "orientation": "any",
+  "categories": ["games", "education", "kids"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%236366f1' rx='20'/><text x='96' y='140' font-size='120' text-anchor='middle' fill='white'>🎮</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%236366f1' rx='50'/><text x='256' y='370' font-size='320' text-anchor='middle' fill='white'>🎮</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'><rect width='1280' height='720' fill='%23f9fafb'/><text x='640' y='360' font-size='48' text-anchor='middle' fill='%236366f1'>Fun Games for Kids Screenshot</text></svg>",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ]
+}

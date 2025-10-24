@@ -3,7 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun Games for Kids! 🎮</title>
+    <title>Fun Games for Kids! 🎮 - Educational Browser Games</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Collection of 10 fun, educational browser games for kids aged 5+. Includes drawing, puzzles, memory games, and more. Play instantly - no downloads required!">
+    <meta name="keywords" content="kids games, educational games, browser games, children games, puzzle games, drawing game, memory games, learning games">
+    <meta name="author" content="Fun Games Collection">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://y-maeda1116.github.io/games/">
+    <meta property="og:title" content="Fun Games for Kids! 🎮 - Educational Browser Games">
+    <meta property="og:description" content="Collection of 10 fun, educational browser games for kids aged 5+. Play instantly in your browser!">
+    <meta property="og:image" content="https://y-maeda1116.github.io/games/assets/images/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://y-maeda1116.github.io/games/">
+    <meta property="twitter:title" content="Fun Games for Kids! 🎮 - Educational Browser Games">
+    <meta property="twitter:description" content="Collection of 10 fun, educational browser games for kids aged 5+. Play instantly in your browser!">
+    <meta property="twitter:image" content="https://y-maeda1116.github.io/games/assets/images/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    <link rel="alternate icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -271,5 +301,49 @@
         <footer>
             <p>Made with ❤️ for amazing kids! &copy; 2024 Fun Games Collection</p>
         </footer>
+
+    <script>
+        // Register Service Worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/games/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Add install prompt for PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button
+            const installButton = document.createElement('button');
+            installButton.textContent = '📱 Install App';
+            installButton.className = 'btn btn-secondary';
+            installButton.style.position = 'fixed';
+            installButton.style.bottom = '20px';
+            installButton.style.right = '20px';
+            installButton.style.zIndex = '1000';
+            
+            installButton.addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        installButton.remove();
+                    }
+                    deferredPrompt = null;
+                });
+            });
+            
+            document.body.appendChild(installButton);
+        });
+    </script>
 </body>
 </html>
