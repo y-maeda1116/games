@@ -1,131 +1,85 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0e68c; /* Khaki */
-    color: #333;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
+    color: #333;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 背景アニメーション */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+    animation: float 15s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
     text-align: center;
 }
 
 h1 {
-    color: #8b4513; /* SaddleBrown */
-}
-
-#game-info {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    width: 300px; /* Or adjust as needed */
-    display: flex;
-    justify-content: space-between;
-}
-
-#game-board {
-    width: 360px; /* e.g., 3 holes * (100px width + 2*10px padding/margin) */
-    height: 360px;
-    background-color: #a0522d; /* Sienna - ground color */
-    border: 5px solid #8b4513; /* SaddleBrown - border */
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* For a 3x3 grid */
-    grid-template-rows: repeat(3, 1fr);
-    gap: 15px; /* Space between holes */
-    padding: 15px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
-
-.hole {
-    background-color: #5c3c10; /* Darker brown for hole */
-    border-radius: 50%; /* Circular holes */
-    position: relative;
-    overflow: hidden; /* Moles shouldn't appear outside their hole */
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid #4a2f0c;
-}
-
-.mole {
-    width: 70%; /* Relative to hole size */
-    height: 70%;
-    background-color: #d2b48c; /* Tan - mole color */
-    border-radius: 50%;
-    border: 2px solid #8b5a2b;
-    position: absolute; /* Positioned within the hole */
-    bottom: -100%; /* Initially hidden below */
-    transition: bottom 0.2s ease-in-out; /* Smooth appearance */
-    display: flex; /* For potential mole features like eyes */
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-}
-
-.mole.up {
-    bottom: 15%; /* Position when mole is up */
-}
-
-/* Simple eyes for the mole */
-.mole::before, .mole::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: black;
-    top: 30%;
-}
-.mole::before { left: 30%; }
-.mole::after { right: 30%; }
-
-
-/* Visual feedback for a whacked mole */
-.hole.whacked .mole {
-    background-color: #ff4500; /* Orangey-red when whacked */
-    transform: scale(0.9);
-    transition: background-color 0.1s, transform 0.1s;
-}
-/* Could also add a temporary animation to the hole itself */
-
-
-#start-button {
-    padding: 10px 20px;
-    font-size: 1.2em;
     color: #fff;
-    background-color: #20c997; /* Turquoise */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: slideDown 0.8s ease-out;
 }
 
-#start-button:hover {
-    background-color: #1baa80; /* Darker Turquoise */
-}
-
-#start-button:disabled {
-    background-color: #aaa;
-    cursor: not-allowed;
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 /* Difficulty Selection Styles */
 #difficulty-selection {
     margin-bottom: 30px;
-    text-align: center;
+    animation: fadeIn 1s ease-out 0.3s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 #difficulty-selection h3 {
-    color: #8b4513;
-    margin-bottom: 15px;
-    font-size: 1.3em;
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 .difficulty-buttons {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -134,50 +88,295 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px 20px;
-    border: 3px solid #8b4513;
-    border-radius: 15px;
-    background-color: #fff;
+    padding: 20px 25px;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
     cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 120px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 140px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
 }
 
 .difficulty-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
 .difficulty-btn.active {
-    background-color: #20c997;
+    background: linear-gradient(135deg, #ff6b6b, #feca57);
     color: white;
-    border-color: #1baa80;
+    transform: translateY(-5px);
 }
 
 .difficulty-btn .emoji {
-    font-size: 2em;
-    margin-bottom: 5px;
+    font-size: 2.5em;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
 .difficulty-btn .level-name {
-    font-weight: bold;
-    font-size: 1.1em;
-    margin-bottom: 3px;
+    font-weight: 600;
+    font-size: 1.2em;
+    margin-bottom: 5px;
 }
 
 .difficulty-btn .level-desc {
     font-size: 0.9em;
     opacity: 0.8;
+    font-weight: 300;
 }
 
+/* Game Info */
 #game-info {
-    font-size: 1.3em;
-    margin-bottom: 20px;
-    width: 400px;
     display: flex;
     justify-content: space-between;
-    background-color: rgba(255,255,255,0.8);
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: 2px solid #8b4513;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px 25px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    animation: slideUp 0.8s ease-out 0.6s both;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+#game-info span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#game-info span::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* Game Board */
+#game-board {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(145deg, #2d5016, #4a7c59);
+    border-radius: 25px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px;
+    padding: 25px;
+    margin: 0 auto 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2), inset 0 2px 10px rgba(255,255,255,0.1);
+    animation: scaleIn 0.8s ease-out 0.9s both;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.hole {
+    background: radial-gradient(circle at 30% 30%, #1a1a1a, #000);
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: inset 0 5px 15px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+.hole:hover {
+    transform: scale(1.05);
+}
+
+.hole::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 60%;
+    height: 30%;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.1), transparent);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.mole {
+    width: 75%;
+    height: 75%;
+    background: linear-gradient(145deg, #8B4513, #A0522D);
+    border-radius: 50%;
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+.mole.up {
+    bottom: 10%;
+    animation: moleUp 0.3s ease-out;
+}
+
+@keyframes moleUp {
+    0% { bottom: -100%; transform: translateX(-50%) scale(0.8); }
+    70% { bottom: 15%; transform: translateX(-50%) scale(1.1); }
+    100% { bottom: 10%; transform: translateX(-50%) scale(1); }
+}
+
+/* Mole eyes */
+.mole::before, .mole::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #000);
+    top: 25%;
+    animation: blink 3s infinite;
+}
+
+.mole::before { left: 25%; }
+.mole::after { right: 25%; }
+
+@keyframes blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+}
+
+/* Mole nose */
+.mole::after {
+    content: '';
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 4px;
+    background: #000;
+    border-radius: 50%;
+}
+
+/* Whacked mole effect */
+.hole.whacked .mole {
+    background: linear-gradient(145deg, #ff4757, #ff3742);
+    transform: translateX(-50%) scale(0.8);
+    animation: whackEffect 0.3s ease-out;
+}
+
+@keyframes whackEffect {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.2) rotate(10deg); }
+    100% { transform: translateX(-50%) scale(0.8) rotate(-5deg); }
+}
+
+/* Start Button */
+#start-button {
+    padding: 15px 40px;
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+#start-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+}
+
+#start-button:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+#start-button:disabled {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    cursor: not-allowed;
+    transform: none;
+    animation: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Ripple Effect */
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Score Animation */
+@keyframes scoreUp {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); color: #ff6b6b; }
+    100% { transform: scale(1); }
+}
+
+.score-animation {
+    animation: scoreUp 0.3s ease-out;
+}
+
+/* Success Particles */
+.success-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #feca57;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle 1s ease-out forwards;
+}
+
+@keyframes particle {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body { padding: 15px; }
+    h1 { font-size: 2em; }
+    #game-board { 
+        width: 320px; 
+        height: 320px; 
+        gap: 15px; 
+        padding: 20px; 
+    }
+    .difficulty-buttons { gap: 15px; }
+    .difficulty-btn { 
+        min-width: 120px; 
+        padding: 15px 20px; 
+    }
+    #game-info { 
+        flex-direction: column; 
+        gap: 10px; 
+        text-align: center; 
+    }
 }

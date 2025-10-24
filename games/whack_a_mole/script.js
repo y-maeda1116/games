@@ -47,18 +47,80 @@ document.addEventListener('DOMContentLoaded', () => {
     let moleDisappearTimer = null; // Track mole disappear timer
 
     function createGameBoard() {
+        gameBoard.innerHTML = ''; // Clear existing holes
+        holes = []; // Reset holes array
+        
         for (let i = 0; i < numHoles; i++) {
             const hole = document.createElement('div');
             hole.classList.add('hole');
-            hole.dataset.index = i; // Store index for reference
+            hole.dataset.index = i;
 
             const mole = document.createElement('div');
             mole.classList.add('mole');
             hole.appendChild(mole);
 
-            hole.addEventListener('click', whackMole);
+            // Add click event with modern feedback
+            hole.addEventListener('click', (e) => {
+                whackMole(e);
+                createClickEffect(e);
+            });
+            
             gameBoard.appendChild(hole);
             holes.push(hole);
+            
+            // Stagger hole appearance animation
+            hole.style.animationDelay = `${i * 0.1}s`;
+        }
+    }
+
+    // Modern click effect
+    function createClickEffect(event) {
+        const ripple = document.createElement('div');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s linear';
+        ripple.style.pointerEvents = 'none';
+        
+        const rect = event.currentTarget.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+        
+        event.currentTarget.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    }
+
+    // Success particles effect
+    function createSuccessParticles(hole) {
+        const rect = hole.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        for (let i = 0; i < 8; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'success-particle';
+            
+            const angle = (i / 8) * Math.PI * 2;
+            const distance = 50 + Math.random() * 30;
+            const dx = Math.cos(angle) * distance;
+            const dy = Math.sin(angle) * distance;
+            
+            particle.style.left = centerX + 'px';
+            particle.style.top = centerY + 'px';
+            particle.style.setProperty('--dx', dx + 'px');
+            particle.style.setProperty('--dy', dy + 'px');
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
         }
     }
 
@@ -149,10 +211,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 moleDisappearTimer = null;
             }
 
+            // Create success particles
+            createSuccessParticles(hole);
+
             // Remove feedback class after a short delay
             setTimeout(() => {
                 hole.classList.remove('whacked');
-            }, 200);
+            }, 300);
 
             // Schedule next mole appearance
             scheduleNextMole();
@@ -161,6 +226,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateScoreDisplay() {
         scoreDisplay.textContent = score;
+        
+        // Add score animation
+        scoreDisplay.parentElement.classList.add('score-animation');
+        setTimeout(() => {
+            scoreDisplay.parentElement.classList.remove('score-animation');
+        }, 300);
     }
 
     function updateTimeLeftDisplay() {
