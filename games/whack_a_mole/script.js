@@ -4,16 +4,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeButton = document.getElementById('homeButton');
     const timeLeftDisplay = document.getElementById('time-left');
     const startButton = document.getElementById('start-button');
+    const currentLevelDisplay = document.getElementById('current-level');
+    const difficultyButtons = document.querySelectorAll('.difficulty-btn');
 
     // Game Parameters
     const numHoles = 9; // 3x3 grid
-    const moleUpTime = 800; // How long a mole stays up in milliseconds
-    const moleIntervalMin = 500; // Minimum time between mole appearances
-    const moleIntervalMax = 1500; // Maximum time between mole appearances
-    const gameDuration = 30; // Game duration in seconds
+    
+    // Difficulty Settings
+    const difficultySettings = {
+        easy: {
+            moleUpTime: 2000,        // 2 seconds - plenty of time for 5-year-olds
+            moleIntervalMin: 1500,   // 1.5 seconds minimum between moles
+            moleIntervalMax: 3000,   // 3 seconds maximum between moles
+            gameDuration: 45,        // 45 seconds - longer game
+            name: 'Easy'
+        },
+        medium: {
+            moleUpTime: 1200,        // 1.2 seconds
+            moleIntervalMin: 800,    // 0.8 seconds minimum
+            moleIntervalMax: 2000,   // 2 seconds maximum
+            gameDuration: 30,        // 30 seconds
+            name: 'Medium'
+        },
+        hard: {
+            moleUpTime: 600,         // 0.6 seconds - very fast!
+            moleIntervalMin: 300,    // 0.3 seconds minimum
+            moleIntervalMax: 1000,   // 1 second maximum
+            gameDuration: 20,        // 20 seconds - shorter but intense
+            name: 'Hard'
+        }
+    };
+
+    let currentDifficulty = 'easy'; // Default to easy for 5-year-olds
 
     let score = 0;
-    let timeLeft = gameDuration;
+    let timeLeft = 0;
     let moleTimerId; // For mole appearances
     let gameTimerId; // For game duration countdown
     let holes = []; // Array to store hole elements
@@ -61,21 +86,41 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTimeout(moleDisappearTimer);
         }
 
-        // Mole disappears after some time
+        // Mole disappears after some time (based on difficulty)
+        const settings = difficultySettings[currentDifficulty];
         moleDisappearTimer = setTimeout(() => {
             if (currentMoleHole === hole && gameActive) { // only hide if it's still the current mole and game is active
                 hideMole(hole);
                 currentMoleHole = null;
                 scheduleNextMole(); // Schedule next mole appearance
             }
-        }, moleUpTime);
+        }, settings.moleUpTime);
     }
 
     function scheduleNextMole() {
         if (!gameActive) return;
         
-        const nextMoleDelay = Math.random() * (moleIntervalMax - moleIntervalMin) + moleIntervalMin;
+        const settings = difficultySettings[currentDifficulty];
+        const nextMoleDelay = Math.random() * (settings.moleIntervalMax - settings.moleIntervalMin) + settings.moleIntervalMin;
         moleTimerId = setTimeout(showMole, nextMoleDelay);
+    }
+
+    // Difficulty selection functions
+    function selectDifficulty(level) {
+        currentDifficulty = level;
+        const settings = difficultySettings[level];
+        
+        // Update UI
+        currentLevelDisplay.textContent = settings.name;
+        timeLeftDisplay.textContent = settings.gameDuration;
+        
+        // Update button states
+        difficultyButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.level === level) {
+                btn.classList.add('active');
+            }
+        });
     }
 
     function hideMole(hole) {
@@ -124,8 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startGame() {
         // Reset game state
+        const settings = difficultySettings[currentDifficulty];
         score = 0;
-        timeLeft = gameDuration;
+        timeLeft = settings.gameDuration;
         gameActive = true;
         currentMoleHole = null;
         
@@ -171,17 +217,47 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Show result with better styling
         setTimeout(() => {
-            alert(`🎉 Game Over! Your final score: ${score} 🎉`);
+            const settings = difficultySettings[currentDifficulty];
+            let message = `🎉 Game Over! Your final score: ${score} 🎉\n`;
+            message += `Difficulty: ${settings.name}\n`;
+            
+            // Encouraging messages based on difficulty and score
+            if (currentDifficulty === 'easy') {
+                if (score >= 15) message += "🌟 Excellent! You're a mole-whacking champion!";
+                else if (score >= 10) message += "👏 Great job! Keep practicing!";
+                else if (score >= 5) message += "😊 Good try! You're getting better!";
+                else message += "🎮 Nice start! Try again to improve!";
+            } else if (currentDifficulty === 'medium') {
+                if (score >= 20) message += "🏆 Amazing! You're really skilled!";
+                else if (score >= 15) message += "⭐ Very good! You're improving!";
+                else if (score >= 10) message += "👍 Not bad! Keep going!";
+                else message += "💪 Good effort! Practice makes perfect!";
+            } else { // hard
+                if (score >= 25) message += "🥇 Incredible! You're a master!";
+                else if (score >= 20) message += "🔥 Fantastic! Lightning fast reflexes!";
+                else if (score >= 15) message += "⚡ Great speed! You're getting there!";
+                else message += "🚀 Challenging level! Keep trying!";
+            }
+            
+            alert(message);
         }, 100);
     }
 
+    // Event listeners for difficulty selection
+    difficultyButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            selectDifficulty(btn.dataset.level);
+        });
+    });
+
     // Initial setup
+    selectDifficulty('easy'); // Set default difficulty
     updateTimeLeftDisplay(); // Show initial time
+    
     // Home button event listener
     homeButton.addEventListener('click', () => {
         window.location.href = '../../index.html';
     });
 
     startButton.addEventListener('click', startGame);
-    // createGameBoard(); // Create board initially so it's visible, or do it in startGame for fresh setup
 });

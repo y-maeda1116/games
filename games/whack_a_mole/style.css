@@ -110,3 +110,74 @@ h1 {
     background-color: #aaa;
     cursor: not-allowed;
 }
+
+/* Difficulty Selection Styles */
+#difficulty-selection {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#difficulty-selection h3 {
+    color: #8b4513;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.difficulty-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 20px;
+    border: 3px solid #8b4513;
+    border-radius: 15px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.difficulty-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.difficulty-btn.active {
+    background-color: #20c997;
+    color: white;
+    border-color: #1baa80;
+}
+
+.difficulty-btn .emoji {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.difficulty-btn .level-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 3px;
+}
+
+.difficulty-btn .level-desc {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+#game-info {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255,255,255,0.8);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #8b4513;
+}
