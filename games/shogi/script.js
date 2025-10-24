@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial call to set mode from checkbox state
     // Home button event listener
     homeButton.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = '../../index.html';
     });
 
     isHighlightModeEnabled = highlightModeCheckbox.checked;

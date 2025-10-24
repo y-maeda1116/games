@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial message before game starts
     // Home button event listener
     homeButton.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = '../../index.html';
     });
 
     gameInfoElement.textContent = "Select a game mode to start.";

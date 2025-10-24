@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     optionsArea.innerHTML = '';
     // Home button event listener
     homeButton.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = '../../index.html';
     });
 
     feedbackTextElement.textContent = '';

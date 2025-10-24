@@ -7,24 +7,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const characterSelect = document.getElementById('character-select');
 
     const characters = [
-        { id: 'bear', name: 'Bear', src: 'images_dress_up_game/bear_char.svg' },
-        { id: 'char1', name: 'Cat', src: 'images_dress_up_game/char_1.svg' },
-        { id: 'char2', name: 'Rabbit', src: 'images_dress_up_game/char_2.svg' },
-        { id: 'char3', name: 'Robot', src: 'images_dress_up_game/char_3.svg' },
-        { id: 'char4', name: 'Ghost', src: 'images_dress_up_game/char_4.svg' },
-        { id: 'char5', name: 'Alien', src: 'images_dress_up_game/char_5.svg' },
-        { id: 'char6', name: 'Simple Person', src: 'images_dress_up_game/char_6.svg' },
-        { id: 'char7', name: 'Dog', src: 'images_dress_up_game/char_7.svg' },
-        { id: 'char8', name: 'Bird', src: 'images_dress_up_game/char_8.svg' },
-        { id: 'char9', name: 'Monster', src: 'images_dress_up_game/char_9.svg' },
-        { id: 'char10', name: 'Knight', src: 'images_dress_up_game/char_10.svg' }
+        { id: 'bear', name: 'Bear', src: '../../assets/images/dress_up_game/bear_char.svg' },
+        { id: 'char1', name: 'Cat', src: '../../assets/images/dress_up_game/char_1.svg' },
+        { id: 'char2', name: 'Rabbit', src: '../../assets/images/dress_up_game/char_2.svg' },
+        { id: 'char3', name: 'Robot', src: '../../assets/images/dress_up_game/char_3.svg' },
+        { id: 'char4', name: 'Ghost', src: '../../assets/images/dress_up_game/char_4.svg' },
+        { id: 'char5', name: 'Alien', src: '../../assets/images/dress_up_game/char_5.svg' },
+        { id: 'char6', name: 'Simple Person', src: '../../assets/images/dress_up_game/char_6.svg' },
+        { id: 'char7', name: 'Dog', src: '../../assets/images/dress_up_game/char_7.svg' },
+        { id: 'char8', name: 'Bird', src: '../../assets/images/dress_up_game/char_8.svg' },
+        { id: 'char9', name: 'Monster', src: '../../assets/images/dress_up_game/char_9.svg' },
+        { id: 'char10', name: 'Knight', src: '../../assets/images/dress_up_game/char_10.svg' }
     ];
 
     const clothingItems = [
-        { id: 'hat1', name: 'Red Cap', src: 'images_dress_up_game/hat_red.svg', category: 'hat' },
-        { id: 'shirt1', name: 'Blue T-Shirt', src: 'images_dress_up_game/shirt_blue.svg', category: 'shirt' },
-        { id: 'pants1', name: 'Green Shorts', src: 'images_dress_up_game/pants_green.svg', category: 'pants' },
-        { id: 'glasses1', name: 'Black Glasses', src: 'images_dress_up_game/glasses_black.svg', category: 'glasses' }
+        { id: 'hat1', name: 'Red Cap', src: '../../assets/images/dress_up_game/hat_red.svg', category: 'hat' },
+        { id: 'shirt1', name: 'Blue T-Shirt', src: '../../assets/images/dress_up_game/shirt_blue.svg', category: 'shirt' },
+        { id: 'pants1', name: 'Green Shorts', src: '../../assets/images/dress_up_game/pants_green.svg', category: 'pants' },
+        { id: 'glasses1', name: 'Black Glasses', src: '../../assets/images/dress_up_game/glasses_black.svg', category: 'glasses' }
     ];
 
     let draggedItem = null; // To store the data of the item being dragged
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     populateWardrobe();
     // Home button event listener
     homeButton.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = '../../index.html';
     });
 
     populateCharacterSelect();

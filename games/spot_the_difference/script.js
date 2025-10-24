@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Home button event listener
     homeButton.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = '../../index.html';
     });
 
     // Optional: Recalculate canvas sizes on window resize if layout is responsive
