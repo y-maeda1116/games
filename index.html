@@ -3,120 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Games for Kids</title>
+    <title>Fun Games for Kids! 🎮</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f8ff; /* AliceBlue */
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@400;600;700&display=swap');
+        
+        * {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 背景アニメーション */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="90" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="30" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             text-align: center;
         }
+
         header {
             margin-bottom: 40px;
+            animation: bounceIn 1s ease-out;
         }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         h1 {
-            color: #ff69b4; /* HotPink */
-            font-size: 2.5em;
-            text-shadow: 1px 1px #fff;
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5em;
+            color: #fff;
+            text-shadow: 3px 3px 0px #ff6b6b, 6px 6px 0px #4ecdc4;
+            margin-bottom: 10px;
+            animation: rainbow 3s ease-in-out infinite alternate;
         }
-        .instructions {
-            font-size: 1.2em;
-            color: #555;
+
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .subtitle {
+            font-size: 1.4em;
+            color: #fff;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
             margin-bottom: 30px;
         }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+            animation: slideUp 0.8s ease-out 0.3s both;
         }
-        nav li {
-            margin: 15px 0;
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        nav a {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 1.5em;
-            color: #fff;
-            background-color: #007bff; /* Blue */
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
             text-decoration: none;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #333;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
         }
-        nav a:hover, nav a:focus {
-            background-color: #0056b3; /* Darker Blue */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
         }
-        /* Specific game link colors for fun */
-        nav a.matching-game-link { background-color: #28a745; /* Green */ }
-        nav a.matching-game-link:hover, nav a.matching-game-link:focus { background-color: #1e7e34; }
 
-        nav a.puzzle-game-link { background-color: #ffc107; /* Yellow */ color: #333; }
-        nav a.puzzle-game-link:hover, nav a.puzzle-game-link:focus { background-color: #e0a800; }
+        .game-card:hover::before {
+            left: 100%;
+        }
 
-        nav a.dress-up-game-link { background-color: #6f42c1; /* Purple */ }
-        nav a.dress-up-game-link:hover, nav a.dress-up-game-link:focus { background-color: #5a32a3; }
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
 
+        .game-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
 
-        nav a.othello-game-link { background-color: #fd7e14; /* Orange */ }
-        nav a.othello-game-link:hover, nav a.othello-game-link:focus { background-color: #e66900; }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
 
+        .game-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
 
-        nav a.shogi-game-link { background-color: #4b0082; /* Indigo */ }
-        nav a.shogi-game-link:hover, nav a.shogi-game-link:focus { background-color: #3a006a; /* Darker Indigo */ }
+        .game-description {
+            font-size: 0.95em;
+            color: #666;
+            line-height: 1.4;
+        }
 
-        nav a.drawing-game-link { background-color: #17a2b8; /* Teal */ }
-        nav a.drawing-game-link:hover, nav a.drawing-game-link:focus { background-color: #117a8b; }
+        /* ゲーム別カラー */
+        .matching-game { border-color: #28a745; }
+        .matching-game:hover { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
 
-        nav a.spot-game-link { background-color: #dc3545; /* Red */ }
-        nav a.spot-game-link:hover, nav a.spot-game-link:focus { background-color: #c82333; }
+        .puzzle-game { border-color: #ffc107; }
+        .puzzle-game:hover { background: linear-gradient(135deg, #ffc107, #fd7e14); color: white; }
 
-        nav a.rhythm-game-link { background-color: #ff69b4; /* HotPink */ }
-        nav a.rhythm-game-link:hover, nav a.rhythm-game-link:focus { background-color: #ff1493; /* DeepPink */ }
+        .dress-up-game { border-color: #6f42c1; }
+        .dress-up-game:hover { background: linear-gradient(135deg, #6f42c1, #e83e8c); color: white; }
 
-        nav a.whack-game-link { background-color: #20c997; /* Turquoise */ }
-        nav a.whack-game-link:hover, nav a.whack-game-link:focus { background-color: #1baa80; }
+        .othello-game { border-color: #fd7e14; }
+        .othello-game:hover { background: linear-gradient(135deg, #fd7e14, #dc3545); color: white; }
 
-        nav a.quiz-game-link { background-color: #6610f2; /* Indigo */ }
-        nav a.quiz-game-link:hover, nav a.quiz-game-link:focus { background-color: #5108d8; }
+        .shogi-game { border-color: #6610f2; }
+        .shogi-game:hover { background: linear-gradient(135deg, #6610f2, #6f42c1); color: white; }
+
+        .drawing-game { border-color: #17a2b8; }
+        .drawing-game:hover { background: linear-gradient(135deg, #17a2b8, #20c997); color: white; }
+
+        .spot-game { border-color: #dc3545; }
+        .spot-game:hover { background: linear-gradient(135deg, #dc3545, #e83e8c); color: white; }
+
+        .rhythm-game { border-color: #ff69b4; }
+        .rhythm-game:hover { background: linear-gradient(135deg, #ff69b4, #ff1493); color: white; }
+
+        .whack-game { border-color: #20c997; }
+        .whack-game:hover { background: linear-gradient(135deg, #20c997, #17a2b8); color: white; }
+
+        .quiz-game { border-color: #007bff; }
+        .quiz-game:hover { background: linear-gradient(135deg, #007bff, #6610f2); color: white; }
 
         footer {
-            margin-top: 50px;
+            margin-top: 40px;
+            color: rgba(255,255,255,0.8);
             font-size: 0.9em;
-            color: #777;
+            animation: fadeIn 1s ease-out 1s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            .games-grid { grid-template-columns: 1fr; }
+            .game-card { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Fun Games for 5-Year-Olds!</h1>
-    </header>
+    <div class="container">
+        <header>
+            <h1>🎮 Fun Games for Kids! 🌟</h1>
+            <p class="subtitle">Choose your favorite game and have fun! 🎉</p>
+        </header>
 
-    <p class="instructions">Click on a game to play!</p>
+        <div class="games-grid">
+            <a href="games/matching/" class="game-card matching-game">
+                <span class="game-icon">🧩</span>
+                <div class="game-title">Matching Game</div>
+                <div class="game-description">Find matching pairs of cute animals and objects!</div>
+            </a>
 
-    <nav>
-        <ul>
-            <li><a href="games/matching/" class="matching-game-link">Play Matching Game</a></li>
-            <li><a href="games/puzzle/" class="puzzle-game-link">Play Puzzle Game</a></li>
-            <li><a href="games/dress_up/" class="dress-up-game-link">Play Dress-Up Game</a></li>
-            <li><a href="games/othello/" class="othello-game-link">Play Othello Game</a></li>
-            <li><a href="games/shogi/" class="game-link shogi-game-link">Play Shogi (将棋)</a></li>
-            <li><a href="games/drawing/" class="drawing-game-link">Play Drawing Game</a></li>
-            <li><a href="games/spot_the_difference/" class="spot-game-link">Play Spot the Difference</a></li>
-            <li><a href="games/rhythm/" class="rhythm-game-link">Play Rhythm Game</a></li>
-            <li><a href="games/whack_a_mole/" class="whack-game-link">Play Whack-a-Mole</a></li>
-            <li><a href="games/learning_quiz/" class="quiz-game-link">Play Learning Quiz</a></li>
-        </ul>
-    </nav>
+            <a href="games/puzzle/" class="game-card puzzle-game">
+                <span class="game-icon">🧩</span>
+                <div class="game-title">Jigsaw Puzzle</div>
+                <div class="game-description">Put the pieces together to complete beautiful pictures!</div>
+            </a>
 
-    <footer>
-        <p>&copy; 2024 Fun Games Collection</p>
-    </footer>
+            <a href="games/drawing/" class="game-card drawing-game">
+                <span class="game-icon">🎨</span>
+                <div class="game-title">Drawing Game</div>
+                <div class="game-description">Create amazing artwork with colors, brushes, and stamps!</div>
+            </a>
+
+            <a href="games/dress_up/" class="game-card dress-up-game">
+                <span class="game-icon">👗</span>
+                <div class="game-title">Dress-Up Game</div>
+                <div class="game-description">Dress up your character with fun clothes and accessories!</div>
+            </a>
+
+            <a href="games/whack_a_mole/" class="game-card whack-game">
+                <span class="game-icon">🔨</span>
+                <div class="game-title">Whack-a-Mole</div>
+                <div class="game-description">Quick! Hit the moles as they pop up from their holes!</div>
+            </a>
+
+            <a href="games/spot_the_difference/" class="game-card spot-game">
+                <span class="game-icon">🔍</span>
+                <div class="game-title">Spot the Difference</div>
+                <div class="game-description">Find all the differences between two similar pictures!</div>
+            </a>
+
+            <a href="games/rhythm/" class="game-card rhythm-game">
+                <span class="game-icon">🎵</span>
+                <div class="game-title">Rhythm Game</div>
+                <div class="game-description">Press the keys to the beat and make beautiful music!</div>
+            </a>
+
+            <a href="games/learning_quiz/" class="game-card quiz-game">
+                <span class="game-icon">📚</span>
+                <div class="game-title">Learning Quiz</div>
+                <div class="game-description">Answer fun questions and learn new things!</div>
+            </a>
+
+            <a href="games/othello/" class="game-card othello-game">
+                <span class="game-icon">⚫</span>
+                <div class="game-title">Othello Game</div>
+                <div class="game-description">Strategy game with black and white pieces!</div>
+            </a>
+
+            <a href="games/shogi/" class="game-card shogi-game">
+                <span class="game-icon">♟️</span>
+                <div class="game-title">Shogi (将棋)</div>
+                <div class="game-description">Japanese chess game for strategic thinking!</div>
+            </a>
+        </div>
+    </div>
+
+        <footer>
+            <p>🌈 Made with ❤️ for amazing kids! &copy; 2024 Fun Games Collection 🌈</p>
+        </footer>
 </body>
 </html>
