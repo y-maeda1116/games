@@ -6,11 +6,12 @@
     <title>Drawing Game</title>
     <link rel="stylesheet" href="../../assets/css/common.css">
     <link rel="stylesheet" href="style.css">
+    <script src="../../assets/js/i18n.js"></script>
 </head>
 <body>
     <div class="header-container">
-        <button id="homeButton" class="home-button">🏠 Home</button>
-        <h1>Drawing Game</h1>
+        <button id="homeButton" class="home-button" data-i18n="common.home">🏠 Home</button>
+        <h1 data-i18n="games.drawing.title">Drawing Game</h1>
     </div>
     <div id="toolbar">
         <!-- Color Section -->
@@ -30,23 +31,23 @@
 
         <!-- Brush Size -->
         <div class="brush-size-container">
-            <label for="brushSize">Brush Size:</label>
+            <label for="brushSize" data-i18n="games.drawing.brushSize">Brush Size:</label>
             <input type="range" id="brushSize" min="1" max="20" value="5">
             <span id="brushSizeValue">5</span>
         </div>
 
         <!-- Tools -->
         <div class="tools-section">
-            <button id="brush" class="active">🖌️ Brush</button>
-            <button id="eraser">🧽 Eraser</button>
+            <button id="brush" class="active" data-i18n="games.drawing.brush">🖌️ Brush</button>
+            <button id="eraser" data-i18n="games.drawing.eraser">🧽 Eraser</button>
         </div>
 
         <!-- Actions -->
         <div class="actions-section">
-            <button id="undo">↶ Undo</button>
-            <button id="redo">↷ Redo</button>
-            <button id="save">💾 Save</button>
-            <button id="clear">🗑️ Clear</button>
+            <button id="undo" data-i18n="games.drawing.undo">↶ Undo</button>
+            <button id="redo" data-i18n="games.drawing.redo">↷ Redo</button>
+            <button id="save" data-i18n="common.save">💾 Save</button>
+            <button id="clear" data-i18n="games.drawing.clear">🗑️ Clear</button>
         </div>
     </div>
 
@@ -55,7 +56,7 @@
         
         <!-- Stamps Panel -->
         <div id="stampsPanel" class="stamps-panel hidden">
-            <h3>Choose a Stamp:</h3>
+            <h3 data-i18n="games.drawing.chooseStamp">Choose a Stamp:</h3>
             <div class="stamps-grid">
                 <div class="stamp-btn" data-stamp="⭐">⭐</div>
                 <div class="stamp-btn" data-stamp="❤️">❤️</div>

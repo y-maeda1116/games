@@ -297,4 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setTool('brush');
     // Save initial blank canvas state
     saveCanvasState();
+
+    // 多言語対応を初期化
+    if (window.i18n) {
+        window.i18n.init();
+    }
 });

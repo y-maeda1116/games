@@ -34,6 +34,9 @@
     
     <!-- Web App Manifest -->
     <link rel="manifest" href="manifest.json">
+    
+    <!-- i18n Script -->
+    <script src="assets/js/i18n.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -231,75 +234,75 @@
 <body>
     <div class="container">
         <header>
-            <h1>🎮 Fun Games for Kids! 🌟</h1>
-            <p class="subtitle">Choose your favorite game and have fun! 🎉</p>
+            <h1 data-i18n="homepage.title">🎮 Fun Games for Kids! 🌟</h1>
+            <p class="subtitle" data-i18n="homepage.subtitle">Choose your favorite game and have fun! 🎉</p>
         </header>
 
         <div class="games-grid">
             <a href="games/matching/" class="game-card matching-game">
                 <span class="game-icon">🧩</span>
-                <div class="game-title">Matching Game</div>
-                <div class="game-description">Find matching pairs of cute animals and objects!</div>
+                <div class="game-title" data-i18n="games.matching.title">Matching Game</div>
+                <div class="game-description" data-i18n="games.matching.description">Find matching pairs of cute animals and objects!</div>
             </a>
 
             <a href="games/puzzle/" class="game-card puzzle-game">
                 <span class="game-icon">🧩</span>
-                <div class="game-title">Jigsaw Puzzle</div>
-                <div class="game-description">Put the pieces together to complete beautiful pictures!</div>
+                <div class="game-title" data-i18n="games.puzzle.title">Jigsaw Puzzle</div>
+                <div class="game-description" data-i18n="games.puzzle.description">Put the pieces together to complete beautiful pictures!</div>
             </a>
 
             <a href="games/drawing/" class="game-card drawing-game">
                 <span class="game-icon">🎨</span>
-                <div class="game-title">Drawing Game</div>
-                <div class="game-description">Create amazing artwork with colors, brushes, and stamps!</div>
+                <div class="game-title" data-i18n="games.drawing.title">Drawing Game</div>
+                <div class="game-description" data-i18n="games.drawing.description">Create amazing artwork with colors, brushes, and stamps!</div>
             </a>
 
             <a href="games/dress_up/" class="game-card dress-up-game">
                 <span class="game-icon">👗</span>
-                <div class="game-title">Dress-Up Game</div>
-                <div class="game-description">Dress up your character with fun clothes and accessories!</div>
+                <div class="game-title" data-i18n="games.dressUp.title">Dress-Up Game</div>
+                <div class="game-description" data-i18n="games.dressUp.description">Dress up your character with fun clothes and accessories!</div>
             </a>
 
             <a href="games/whack_a_mole/" class="game-card whack-game">
                 <span class="game-icon">🔨</span>
-                <div class="game-title">Whack-a-Mole</div>
-                <div class="game-description">Quick! Hit the moles as they pop up from their holes!</div>
+                <div class="game-title" data-i18n="games.whackMole.title">Whack-a-Mole</div>
+                <div class="game-description" data-i18n="games.whackMole.description">Quick! Hit the moles as they pop up from their holes!</div>
             </a>
 
             <a href="games/spot_the_difference/" class="game-card spot-game">
                 <span class="game-icon">🔍</span>
-                <div class="game-title">Spot the Difference</div>
-                <div class="game-description">Find all the differences between two similar pictures!</div>
+                <div class="game-title" data-i18n="games.spotDifference.title">Spot the Difference</div>
+                <div class="game-description" data-i18n="games.spotDifference.description">Find all the differences between two similar pictures!</div>
             </a>
 
             <a href="games/rhythm/" class="game-card rhythm-game">
                 <span class="game-icon">🎵</span>
-                <div class="game-title">Rhythm Game</div>
-                <div class="game-description">Press the keys to the beat and make beautiful music!</div>
+                <div class="game-title" data-i18n="games.rhythm.title">Rhythm Game</div>
+                <div class="game-description" data-i18n="games.rhythm.description">Press the keys to the beat and make beautiful music!</div>
             </a>
 
             <a href="games/learning_quiz/" class="game-card quiz-game">
                 <span class="game-icon">📚</span>
-                <div class="game-title">Learning Quiz</div>
-                <div class="game-description">Answer fun questions and learn new things!</div>
+                <div class="game-title" data-i18n="games.learningQuiz.title">Learning Quiz</div>
+                <div class="game-description" data-i18n="games.learningQuiz.description">Answer fun questions and learn new things!</div>
             </a>
 
             <a href="games/othello/" class="game-card othello-game">
                 <span class="game-icon">⚫</span>
-                <div class="game-title">Othello Game</div>
-                <div class="game-description">Strategy game with black and white pieces!</div>
+                <div class="game-title" data-i18n="games.othello.title">Othello Game</div>
+                <div class="game-description" data-i18n="games.othello.description">Strategy game with black and white pieces!</div>
             </a>
 
             <a href="games/shogi/" class="game-card shogi-game">
                 <span class="game-icon">♟️</span>
-                <div class="game-title">Shogi (将棋)</div>
-                <div class="game-description">Japanese chess game for strategic thinking!</div>
+                <div class="game-title" data-i18n="games.shogi.title">Shogi (将棋)</div>
+                <div class="game-description" data-i18n="games.shogi.description">Japanese chess game for strategic thinking!</div>
             </a>
         </div>
     </div>
 
         <footer>
-            <p>Made with ❤️ for amazing kids! &copy; 2024 Fun Games Collection</p>
+            <p data-i18n="homepage.footer">Made with ❤️ for amazing kids! &copy; 2024 Fun Games Collection</p>
         </footer>
 
     <script>
@@ -343,6 +346,11 @@
             });
             
             document.body.appendChild(installButton);
+        });
+
+        // 多言語対応を初期化
+        document.addEventListener('DOMContentLoaded', async () => {
+            await window.i18n.init();
         });
     </script>
 </body>

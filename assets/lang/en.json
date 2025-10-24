@@ -1,0 +1,92 @@
+{
+  "common": {
+    "home": "Home",
+    "play": "Play",
+    "reset": "Reset",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "score": "Score",
+    "time": "Time",
+    "level": "Level",
+    "gameOver": "Game Over",
+    "youWin": "You Win!",
+    "tryAgain": "Try Again",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "save": "Save",
+    "load": "Load",
+    "settings": "Settings",
+    "language": "Language"
+  },
+  "homepage": {
+    "title": "Fun Games for Kids!",
+    "subtitle": "Choose your favorite game and have fun!",
+    "footer": "Made with ❤️ for amazing kids! © 2024 Fun Games Collection"
+  },
+  "games": {
+    "matching": {
+      "title": "Matching Game",
+      "description": "Find matching pairs of cute animals and objects!",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "resetGame": "Reset Game"
+    },
+    "puzzle": {
+      "title": "Jigsaw Puzzle",
+      "description": "Put the pieces together to complete beautiful pictures!",
+      "piecesArea": "Puzzle Pieces",
+      "boardArea": "Place Pieces Here",
+      "shuffle": "Shuffle Pieces",
+      "reset": "Reset Game"
+    },
+    "drawing": {
+      "title": "Drawing Game",
+      "description": "Create amazing artwork with colors, brushes, and stamps!",
+      "brushSize": "Brush Size",
+      "brush": "Brush",
+      "eraser": "Eraser",
+      "stamps": "Stamps",
+      "chooseStamp": "Choose a Stamp:",
+      "undo": "Undo",
+      "redo": "Redo",
+      "clear": "Clear"
+    },
+    "dressUp": {
+      "title": "Dress-Up Game",
+      "description": "Dress up your character with fun clothes and accessories!",
+      "chooseCharacter": "Choose Character",
+      "resetOutfit": "Reset Outfit"
+    },
+    "whackMole": {
+      "title": "Whack-a-Mole",
+      "description": "Quick! Hit the moles as they pop up from their holes!",
+      "timeLeft": "Time Left",
+      "startGame": "Start Game"
+    },
+    "spotDifference": {
+      "title": "Spot the Difference",
+      "description": "Find all the differences between two similar pictures!"
+    },
+    "rhythm": {
+      "title": "Rhythm Game",
+      "description": "Press the keys to the beat and make beautiful music!"
+    },
+    "learningQuiz": {
+      "title": "Learning Quiz",
+      "description": "Answer fun questions and learn new things!"
+    },
+    "othello": {
+      "title": "Othello Game",
+      "description": "Strategy game with black and white pieces!",
+      "playerVsPlayer": "Player vs Player",
+      "playerVsAI": "Player vs AI"
+    },
+    "shogi": {
+      "title": "Shogi (将棋)",
+      "description": "Japanese chess game for strategic thinking!"
+    }
+  }
+}

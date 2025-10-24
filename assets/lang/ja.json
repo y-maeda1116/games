@@ -1,0 +1,92 @@
+{
+  "common": {
+    "home": "ホーム",
+    "play": "プレイ",
+    "reset": "リセット",
+    "start": "スタート",
+    "pause": "一時停止",
+    "resume": "再開",
+    "score": "スコア",
+    "time": "時間",
+    "level": "レベル",
+    "gameOver": "ゲームオーバー",
+    "youWin": "勝利！",
+    "tryAgain": "もう一度",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "save": "保存",
+    "load": "読み込み",
+    "settings": "設定",
+    "language": "言語"
+  },
+  "homepage": {
+    "title": "子供向け楽しいゲーム！",
+    "subtitle": "好きなゲームを選んで楽しもう！",
+    "footer": "素晴らしい子供たちのために❤️で作られました！ © 2024 楽しいゲームコレクション"
+  },
+  "games": {
+    "matching": {
+      "title": "マッチングゲーム",
+      "description": "可愛い動物やオブジェクトのペアを見つけよう！",
+      "easy": "かんたん",
+      "medium": "ふつう",
+      "hard": "むずかしい",
+      "resetGame": "ゲームリセット"
+    },
+    "puzzle": {
+      "title": "ジグソーパズル",
+      "description": "ピースを組み合わせて美しい絵を完成させよう！",
+      "piecesArea": "パズルピース",
+      "boardArea": "ここにピースを置いてね",
+      "shuffle": "ピースをシャッフル",
+      "reset": "ゲームリセット"
+    },
+    "drawing": {
+      "title": "お絵描きゲーム",
+      "description": "色、ブラシ、スタンプで素晴らしいアートを作ろう！",
+      "brushSize": "ブラシサイズ",
+      "brush": "ブラシ",
+      "eraser": "消しゴム",
+      "stamps": "スタンプ",
+      "chooseStamp": "スタンプを選んでね：",
+      "undo": "元に戻す",
+      "redo": "やり直し",
+      "clear": "クリア"
+    },
+    "dressUp": {
+      "title": "着せ替えゲーム",
+      "description": "キャラクターを楽しい服やアクセサリーで着飾ろう！",
+      "chooseCharacter": "キャラクターを選ぶ",
+      "resetOutfit": "服装リセット"
+    },
+    "whackMole": {
+      "title": "モグラ叩き",
+      "description": "急いで！穴から出てくるモグラを叩こう！",
+      "timeLeft": "残り時間",
+      "startGame": "ゲーム開始"
+    },
+    "spotDifference": {
+      "title": "間違い探し",
+      "description": "2つの似た絵の違いをすべて見つけよう！"
+    },
+    "rhythm": {
+      "title": "リズムゲーム",
+      "description": "リズムに合わせてキーを押して美しい音楽を作ろう！"
+    },
+    "learningQuiz": {
+      "title": "学習クイズ",
+      "description": "楽しい問題に答えて新しいことを学ぼう！"
+    },
+    "othello": {
+      "title": "オセロゲーム",
+      "description": "白と黒の石を使った戦略ゲーム！",
+      "playerVsPlayer": "二人対戦",
+      "playerVsAI": "一人用"
+    },
+    "shogi": {
+      "title": "将棋",
+      "description": "戦略的思考を鍛える日本の将棋ゲーム！"
+    }
+  }
+}
