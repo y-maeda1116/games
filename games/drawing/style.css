@@ -1,0 +1,188 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.header-container {
+    margin-top: 20px;
+}
+
+h1 {
+    color: #333;
+    margin: 0;
+}
+
+#toolbar {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.color-section, .tools-section, .actions-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#toolbar button {
+    padding: 12px 20px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+#toolbar button:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+#toolbar button:disabled {
+    background-color: #ddd;
+    color: #999;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#toolbar button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Preset Colors */
+.preset-colors {
+    display: flex;
+    gap: 8px;
+    margin-right: 10px;
+}
+
+.color-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid #333;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+}
+
+.color-btn.selected {
+    border-width: 4px;
+    border-color: #007bff;
+}
+
+/* Canvas Container */
+.canvas-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Stamps Panel */
+.stamps-panel {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.stamps-panel h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.stamps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 0 auto;
+}
+
+.stamp-btn {
+    width: 80px;
+    height: 80px;
+    border: 3px solid #333;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    transition: all 0.2s;
+}
+
+.stamp-btn:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+.stamp-btn.selected {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+#colorPicker {
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 5px;
+    cursor: pointer;
+    width: 60px;
+    height: 40px;
+}
+
+.brush-size-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+.brush-size-container label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#brushSize {
+    width: 80px;
+}
+
+#brushSizeValue {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+#drawingCanvas {
+    border: 2px solid #333;
+    cursor: crosshair;
+    background-color: #fff;
+}
+
+/* Placeholder styles for tool elements - can be expanded later */
+#eraser.active {
+    background-color: #ddd; /* Example: indicate active eraser */
+}

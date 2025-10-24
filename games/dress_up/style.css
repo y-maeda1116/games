@@ -1,0 +1,185 @@
+body {
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif; /* Child-friendly font */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 20px 0;
+    background-color: #f0f8ff; /* AliceBlue */
+    color: #333;
+}
+
+h1, h2 {
+    color: #ff69b4; /* HotPink for titles */
+    text-shadow: 1px 1px #fff;
+}
+
+.game-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 90%;
+    max-width: 800px; /* Max width for the game area */
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.character-area {
+    width: 220px; /* Slightly wider than character SVG */
+    height: 320px; /* Slightly taller than character SVG */
+    position: relative; /* For absolute positioning of snap zones and clothes */
+    margin-right: 20px; /* Space between character and wardrobe */
+    border: 2px dashed #add8e6; /* LightBlue */
+    padding: 5px;
+    background-color: #f0fff0; /* Honeydew */
+    border-radius: 10px;
+}
+
+#character-image {
+    width: 200px;
+    height: 300px;
+    display: block; /* Remove extra space below img */
+    margin: auto; /* Center the image if area is slightly larger */
+}
+
+/* Snap zones: position them over the character image */
+/* These dimensions and positions are approximate and will need fine-tuning.
+   Character image is 300px high. Character area is 320px high.
+   Assuming 10px padding above the character image within character-area.
+   Bear SVG coordinates are relative to its own canvas.
+   Head top: y=30 (SVG) -> 10+30=40px (area). Eyes: y=75 (SVG) -> 10+75=85px (area).
+   Torso starts around y=100 (SVG) -> 10+100=110px (area). Legs start around y=200 (SVG) -> 10+200=210px (area).
+*/
+.snap-zone {
+    position: absolute;
+    /* border: 1px dashed rgba(255, 0, 0, 0.5); */ /* For debugging positions */
+    background-color: rgba(0, 255, 0, 0.0); /* Initially transparent, highlight on drag? */
+    display: flex; /* To help center the image if needed */
+    align-items: center;
+    justify-content: center;
+}
+
+#zone-head { /* For hats. Sits on head (SVG y=30 to y=130) */
+    top: 25px;   left: 50%; transform: translateX(-50%); /* Covers area y=25 to y=95 */
+    width: 100px; height: 70px;
+}
+#zone-face { /* For glasses. Eyes at SVG y=75. Muzzle y=95 */
+    top: 70px; left: 50%; transform: translateX(-50%); /* Covers area y=70 to y=110 */
+    width: 90px;  height: 40px;
+}
+#zone-torso { /* For shirts. Torso SVG y=100 to y=200 */
+    top: 100px; left: 50%; transform: translateX(-50%); /* Covers area y=100 to y=210 */
+    width: 130px; height: 110px;
+}
+#zone-legs { /* For pants. Legs SVG y=200 to y=280 */
+    top: 200px; left: 50%; transform: translateX(-50%); /* Covers area y=200 to y=280 */
+    width: 110px; height: 80px;
+}
+
+/* Styles for clothing items when they are placed in a snap zone */
+.snap-zone img.placed-item {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensure the whole item is visible and aspect ratio is maintained */
+}
+
+
+.wardrobe-area {
+    width: 55%;
+    min-height: 320px;
+    padding: 15px;
+    background-color: #fff0f5; /* LavenderBlush */
+    border: 2px dashed #ffc0cb; /* Pink */
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+.wardrobe-item {
+    width: 80px; /* Adjust based on SVG sizes */
+    height: 60px; /* Adjust based on SVG sizes */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fafafa;
+    cursor: grab;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.wardrobe-item img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* Ensure aspect ratio is maintained */
+    pointer-events: none; /* So drag events target the parent div */
+}
+
+.wardrobe-item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.wardrobe-item:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+button#reset-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #ff6347; /* Tomato */
+    color: white;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+    box-shadow: 2px 2px #d3d3d3;
+}
+
+button#reset-button:hover {
+    background-color: #e55337; /* Darker Tomato */
+}
+
+/* Class for visual feedback when dragging over a snap zone */
+.drag-over-zone {
+    background-color: rgba(0, 255, 0, 0.2) !important; /* Light green highlight */
+}
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.home-button {
+    position: absolute;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.home-button:hover {
+    background-color: #1e7e34;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
