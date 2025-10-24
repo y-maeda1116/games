@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.3)"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" fill="url(#bg)" stroke="#4f46e5" stroke-width="2"/>
+  
+  <!-- Game controller body -->
+  <rect x="25" y="35" width="50" height="30" rx="15" ry="15" fill="#ffffff" filter="url(#shadow)"/>
+  
+  <!-- D-pad -->
+  <rect x="32" y="42" width="8" height="3" rx="1" fill="#6366f1"/>
+  <rect x="34.5" y="39.5" width="3" height="8" rx="1" fill="#6366f1"/>
+  
+  <!-- Action buttons -->
+  <circle cx="60" cy="45" r="3" fill="#10b981"/>
+  <circle cx="67" cy="45" r="3" fill="#f59e0b"/>
+  <circle cx="63.5" cy="52" r="3" fill="#ef4444"/>
+  
+  <!-- Controller grips -->
+  <ellipse cx="30" cy="65" rx="8" ry="4" fill="#e5e7eb"/>
+  <ellipse cx="70" cy="65" rx="8" ry="4" fill="#e5e7eb"/>
+  
+  <!-- Sparkles for fun -->
+  <g fill="#fbbf24" opacity="0.8">
+    <polygon points="15,20 17,25 22,25 18,28 20,33 15,30 10,33 12,28 8,25 13,25" transform="scale(0.6)"/>
+    <polygon points="80,15 82,20 87,20 83,23 85,28 80,25 75,28 77,23 73,20 78,20" transform="scale(0.5)"/>
+    <polygon points="85,75 87,80 92,80 88,83 90,88 85,85 80,88 82,83 78,80 83,80" transform="scale(0.4)"/>
+  </g>
+</svg>
