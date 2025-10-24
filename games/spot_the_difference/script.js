@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const hintButton = document.getElementById('hintButton');
     const debugButton = document.getElementById('debugButton');
 
-    // Define differences: { x, y, width, height, found }
+    // Define differences: { x, y, radius, found, description }
     // Coordinates are relative to the image (percentage-based for better scaling)
-    // These are example areas - adjust based on actual image differences
+    // Using circular areas for easier clicking
     const differences = [
-        { x: 0.4, y: 0.2, width: 0.2, height: 0.2, found: false }, // Center area (40%, 20% from top-left, 20% width/height)
-        { x: 0.1, y: 0.5, width: 0.15, height: 0.15, found: false }, // Left area
-        { x: 0.7, y: 0.6, width: 0.12, height: 0.12, found: false }  // Right area
+        { x: 0.5, y: 0.3, radius: 0.1, found: false, description: "Center difference" },
+        { x: 0.2, y: 0.6, radius: 0.08, found: false, description: "Left side difference" },
+        { x: 0.8, y: 0.7, radius: 0.08, found: false, description: "Right side difference" }
     ];
 
     let differencesFound = 0;
@@ -69,16 +69,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function highlightDifference(difference, canvasContext) {
         // Convert percentage-based coordinates to actual canvas coordinates
-        const x = difference.x * canvasContext.canvas.width;
-        const y = difference.y * canvasContext.canvas.height;
-        const width = difference.width * canvasContext.canvas.width;
-        const height = difference.height * canvasContext.canvas.height;
+        const centerX = difference.x * canvasContext.canvas.width;
+        const centerY = difference.y * canvasContext.canvas.height;
+        const radius = difference.radius * Math.min(canvasContext.canvas.width, canvasContext.canvas.height);
 
-        canvasContext.strokeStyle = 'red';
-        canvasContext.lineWidth = 3;
-        // Draw a circle around the difference area
+        canvasContext.strokeStyle = '#ff0000';
+        canvasContext.lineWidth = 4;
         canvasContext.beginPath();
-        canvasContext.arc(x + width/2, y + height/2, Math.max(width, height)/2 + 10, 0, 2 * Math.PI);
+        canvasContext.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        canvasContext.stroke();
+        
+        // Add a second circle for better visibility
+        canvasContext.strokeStyle = '#ffffff';
+        canvasContext.lineWidth = 2;
+        canvasContext.beginPath();
+        canvasContext.arc(centerX, centerY, radius + 3, 0, 2 * Math.PI);
         canvasContext.stroke();
     }
 
@@ -110,14 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
         differences.forEach(diff => {
             if (!diff.found) {
                 // Convert percentage-based coordinates to actual canvas coordinates
-                const diffAreaX = diff.x * canvas.width;
-                const diffAreaY = diff.y * canvas.height;
-                const diffAreaWidth = diff.width * canvas.width;
-                const diffAreaHeight = diff.height * canvas.height;
+                const centerX = diff.x * canvas.width;
+                const centerY = diff.y * canvas.height;
+                const radius = diff.radius * Math.min(canvas.width, canvas.height);
 
-                if (clickX >= diffAreaX && clickX <= diffAreaX + diffAreaWidth &&
-                    clickY >= diffAreaY && clickY <= diffAreaY + diffAreaHeight) {
+                // Calculate distance from click to center of difference area
+                const distance = Math.sqrt(Math.pow(clickX - centerX, 2) + Math.pow(clickY - centerY, 2));
 
+                if (distance <= radius) {
                     diff.found = true;
                     differencesFound++;
                     highlightDifference(diff, ctxA); // Highlight on image A
@@ -126,7 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkCompletion();
                     
                     // Show success feedback
-                    showSuccessFeedback(clickX, clickY, canvas);
+                    showSuccessFeedback(clickX, clickY, canvas, diff.description);
+                    return; // Exit loop once difference is found
                 }
             }
         });
@@ -150,15 +156,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Success feedback function
-    function showSuccessFeedback(x, y, canvas) {
+    function showSuccessFeedback(x, y, canvas, description) {
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = 'green';
-        ctx.font = '24px Arial';
-        ctx.fillText('✓', x - 12, y + 8);
+        
+        // Show checkmark
+        ctx.fillStyle = '#00ff00';
+        ctx.font = 'bold 30px Arial';
+        ctx.fillText('✓', x - 15, y + 10);
+        
+        // Show description if provided
+        if (description) {
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.font = 'bold 14px Arial';
+            ctx.strokeText(description, x - 50, y - 20);
+            ctx.fillText(description, x - 50, y - 20);
+        }
         
         setTimeout(() => {
-            ctx.clearRect(x - 20, y - 20, 40, 40);
-        }, 1000);
+            // Redraw the canvas to clear feedback
+            setupCanvases();
+        }, 1500);
     }
 
     // Hint function
@@ -168,24 +187,34 @@ document.addEventListener('DOMContentLoaded', () => {
             const randomDiff = unFoundDifferences[Math.floor(Math.random() * unFoundDifferences.length)];
             
             // Convert percentage coordinates to canvas coordinates
-            const x = randomDiff.x * canvasA.width;
-            const y = randomDiff.y * canvasA.height;
-            const width = randomDiff.width * canvasA.width;
-            const height = randomDiff.height * canvasA.height;
+            const centerX = randomDiff.x * canvasA.width;
+            const centerY = randomDiff.y * canvasA.height;
+            const radius = randomDiff.radius * Math.min(canvasA.width, canvasA.height);
             
-            // Flash hint on both canvases
-            [ctxA, ctxB].forEach(ctx => {
-                ctx.strokeStyle = 'yellow';
-                ctx.lineWidth = 4;
-                ctx.beginPath();
-                ctx.arc(x + width/2, y + height/2, Math.max(width, height)/2 + 15, 0, 2 * Math.PI);
-                ctx.stroke();
-            });
-            
-            // Remove hint after 3 seconds
-            setTimeout(() => {
-                setupCanvases(); // Redraw everything to clear hint
-            }, 3000);
+            // Flash hint on both canvases with pulsing effect
+            let pulseCount = 0;
+            const pulseInterval = setInterval(() => {
+                [ctxA, ctxB].forEach(ctx => {
+                    // Clear previous hint
+                    ctx.clearRect(centerX - radius - 20, centerY - radius - 20, (radius + 20) * 2, (radius + 20) * 2);
+                    
+                    // Draw pulsing hint circle
+                    const pulseRadius = radius + (pulseCount % 2 === 0 ? 10 : 20);
+                    ctx.strokeStyle = pulseCount % 2 === 0 ? '#ffff00' : '#ffa500';
+                    ctx.lineWidth = 5;
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, pulseRadius, 0, 2 * Math.PI);
+                    ctx.stroke();
+                });
+                
+                pulseCount++;
+                if (pulseCount >= 6) { // Pulse 3 times
+                    clearInterval(pulseInterval);
+                    setTimeout(() => {
+                        setupCanvases(); // Redraw everything to clear hint
+                    }, 500);
+                }
+            }, 300);
         } else {
             alert('No more differences to find! 🎉');
         }

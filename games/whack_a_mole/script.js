@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameTimerId; // For game duration countdown
     let holes = []; // Array to store hole elements
     let currentMoleHole = null; // Track which hole has the current mole
+    let gameActive = false; // Track if game is running
+    let moleDisappearTimer = null; // Track mole disappear timer
 
     function createGameBoard() {
         for (let i = 0; i < numHoles; i++) {
@@ -41,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showMole() {
+        if (!gameActive) return; // Don't show moles if game is not active
+        
         if (currentMoleHole) { // If a mole is already up, hide it first
             hideMole(currentMoleHole);
         }
@@ -52,13 +56,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const mole = hole.querySelector('.mole');
         mole.classList.add('up');
 
+        // Clear any existing disappear timer
+        if (moleDisappearTimer) {
+            clearTimeout(moleDisappearTimer);
+        }
+
         // Mole disappears after some time
-        setTimeout(() => {
-            hideMole(hole);
-            if (currentMoleHole === hole) { // only nullify if it's still the current mole
+        moleDisappearTimer = setTimeout(() => {
+            if (currentMoleHole === hole && gameActive) { // only hide if it's still the current mole and game is active
+                hideMole(hole);
                 currentMoleHole = null;
+                scheduleNextMole(); // Schedule next mole appearance
             }
         }, moleUpTime);
+    }
+
+    function scheduleNextMole() {
+        if (!gameActive) return;
+        
+        const nextMoleDelay = Math.random() * (moleIntervalMax - moleIntervalMin) + moleIntervalMin;
+        moleTimerId = setTimeout(showMole, nextMoleDelay);
     }
 
     function hideMole(hole) {
@@ -69,24 +86,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function whackMole(event) {
+        if (!gameActive) return; // Don't allow whacking if game is not active
+        
         const hole = event.currentTarget;
         const mole = hole.querySelector('.mole');
 
-        if (mole.classList.contains('up')) {
+        if (mole.classList.contains('up') && currentMoleHole === hole) {
             score++;
             updateScoreDisplay();
             mole.classList.remove('up'); // Mole goes down immediately
             hole.classList.add('whacked'); // Visual feedback
             currentMoleHole = null; // Mole is whacked, no longer current
 
+            // Clear the disappear timer since mole was whacked
+            if (moleDisappearTimer) {
+                clearTimeout(moleDisappearTimer);
+                moleDisappearTimer = null;
+            }
+
             // Remove feedback class after a short delay
             setTimeout(() => {
                 hole.classList.remove('whacked');
             }, 200);
 
-            // Stop the current mole timer and start a new one sooner for faster gameplay feel
-            clearTimeout(moleTimerId); // Stop current mole's disappear timer
-            moleTimerId = setTimeout(showMole, moleIntervalMin / 2); // Next mole appears a bit faster
+            // Schedule next mole appearance
+            scheduleNextMole();
         }
     }
 
@@ -99,8 +123,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startGame() {
+        // Reset game state
         score = 0;
         timeLeft = gameDuration;
+        gameActive = true;
+        currentMoleHole = null;
+        
+        // Clear any existing timers
+        if (moleTimerId) clearTimeout(moleTimerId);
+        if (gameTimerId) clearInterval(gameTimerId);
+        if (moleDisappearTimer) clearTimeout(moleDisappearTimer);
+        
         updateScoreDisplay();
         updateTimeLeftDisplay();
         startButton.disabled = true;
@@ -109,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createGameBoard(); // Recreate board for a fresh game
 
         // Start mole appearances
-        moleTimerId = setTimeout(showMole, moleIntervalMin); // Initial mole
+        scheduleNextMole();
 
         // Start game timer
         gameTimerId = setInterval(() => {
@@ -122,8 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function endGame() {
-        clearInterval(gameTimerId);
-        clearTimeout(moleTimerId); // Stop moles from appearing/disappearing
+        gameActive = false; // Stop game activity
+        
+        // Clear all timers
+        if (gameTimerId) clearInterval(gameTimerId);
+        if (moleTimerId) clearTimeout(moleTimerId);
+        if (moleDisappearTimer) clearTimeout(moleDisappearTimer);
 
         if (currentMoleHole) { // Hide any mole that might be up
             hideMole(currentMoleHole);
@@ -131,7 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         startButton.disabled = false;
-        alert(`Game Over! Your final score: ${score}`);
+        
+        // Show result with better styling
+        setTimeout(() => {
+            alert(`🎉 Game Over! Your final score: ${score} 🎉`);
+        }, 100);
     }
 
     // Initial setup
