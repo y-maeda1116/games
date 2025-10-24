@@ -10,18 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const differencesCountSpan = document.getElementById('differences-count');
     const resetButton = document.getElementById('resetButton');
     const hintButton = document.getElementById('hintButton');
+    const debugButton = document.getElementById('debugButton');
 
     // Define differences: { x, y, width, height, found }
-    // Coordinates are relative to the image.
-    // For the example SVGs (400x300), adding multiple differences for better gameplay
+    // Coordinates are relative to the image (percentage-based for better scaling)
+    // These are example areas - adjust based on actual image differences
     const differences = [
-        { x: 200, y: 50, width: 100, height: 100, found: false },
-        { x: 50, y: 150, width: 80, height: 80, found: false },
-        { x: 300, y: 200, width: 60, height: 60, found: false }
+        { x: 0.4, y: 0.2, width: 0.2, height: 0.2, found: false }, // Center area (40%, 20% from top-left, 20% width/height)
+        { x: 0.1, y: 0.5, width: 0.15, height: 0.15, found: false }, // Left area
+        { x: 0.7, y: 0.6, width: 0.12, height: 0.12, found: false }  // Right area
     ];
 
     let differencesFound = 0;
     const totalDifferences = differences.length;
+    let debugMode = false; // Set to true to see click coordinates
 
     function setupCanvases() {
         // Ensure images are loaded before getting their dimensions
@@ -66,19 +68,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function highlightDifference(difference, canvasContext) {
-        // Scale coordinates and dimensions if canvas is not same size as original image
-        const scaleX = canvasContext.canvas.width / (imageA.naturalWidth || 400); // Use naturalWidth or fallback to SVG original
-        const scaleY = canvasContext.canvas.height / (imageA.naturalHeight || 300);
-
-        const x = difference.x * scaleX;
-        const y = difference.y * scaleY;
-        const width = difference.width * scaleX;
-        const height = difference.height * scaleY;
+        // Convert percentage-based coordinates to actual canvas coordinates
+        const x = difference.x * canvasContext.canvas.width;
+        const y = difference.y * canvasContext.canvas.height;
+        const width = difference.width * canvasContext.canvas.width;
+        const height = difference.height * canvasContext.canvas.height;
 
         canvasContext.strokeStyle = 'red';
         canvasContext.lineWidth = 3;
-        // Draw a rectangle for the square difference. For circles, use arc.
-        canvasContext.strokeRect(x, y, width, height);
+        // Draw a circle around the difference area
+        canvasContext.beginPath();
+        canvasContext.arc(x + width/2, y + height/2, Math.max(width, height)/2 + 10, 0, 2 * Math.PI);
+        canvasContext.stroke();
     }
 
     function checkCompletion() {
@@ -97,17 +98,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const clickY = event.offsetY;
 
         console.log(`Click on ${canvas.id} at: ${clickX}, ${clickY}`);
+        
+        // Debug mode: show click coordinates
+        if (debugMode) {
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(clickX - 2, clickY - 2, 4, 4);
+            console.log(`Percentage coordinates: ${(clickX/canvas.width).toFixed(2)}, ${(clickY/canvas.height).toFixed(2)}`);
+        }
 
         differences.forEach(diff => {
             if (!diff.found) {
-                // Scale difference coordinates to the current canvas display size
-                const scaleX = canvas.width / (imageA.naturalWidth || 400);
-                const scaleY = canvas.height / (imageA.naturalHeight || 300);
-
-                const diffAreaX = diff.x * scaleX;
-                const diffAreaY = diff.y * scaleY;
-                const diffAreaWidth = diff.width * scaleX;
-                const diffAreaHeight = diff.height * scaleY;
+                // Convert percentage-based coordinates to actual canvas coordinates
+                const diffAreaX = diff.x * canvas.width;
+                const diffAreaY = diff.y * canvas.height;
+                const diffAreaWidth = diff.width * canvas.width;
+                const diffAreaHeight = diff.height * canvas.height;
 
                 if (clickX >= diffAreaX && clickX <= diffAreaX + diffAreaWidth &&
                     clickY >= diffAreaY && clickY <= diffAreaY + diffAreaHeight) {
@@ -118,6 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     highlightDifference(diff, ctxB); // Highlight on image B
                     updateDifferencesCount();
                     checkCompletion();
+                    
+                    // Show success feedback
+                    showSuccessFeedback(clickX, clickY, canvas);
                 }
             }
         });
@@ -140,40 +149,63 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDifferencesCount();
     }
 
+    // Success feedback function
+    function showSuccessFeedback(x, y, canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'green';
+        ctx.font = '24px Arial';
+        ctx.fillText('✓', x - 12, y + 8);
+        
+        setTimeout(() => {
+            ctx.clearRect(x - 20, y - 20, 40, 40);
+        }, 1000);
+    }
+
     // Hint function
     function showHint() {
         const unFoundDifferences = differences.filter(diff => !diff.found);
         if (unFoundDifferences.length > 0) {
             const randomDiff = unFoundDifferences[Math.floor(Math.random() * unFoundDifferences.length)];
             
-            // Temporarily highlight the difference area
-            const scaleX = canvasA.width / (imageA.naturalWidth || 400);
-            const scaleY = canvasA.height / (imageA.naturalHeight || 300);
-            
-            const x = randomDiff.x * scaleX;
-            const y = randomDiff.y * scaleY;
-            const width = randomDiff.width * scaleX;
-            const height = randomDiff.height * scaleY;
+            // Convert percentage coordinates to canvas coordinates
+            const x = randomDiff.x * canvasA.width;
+            const y = randomDiff.y * canvasA.height;
+            const width = randomDiff.width * canvasA.width;
+            const height = randomDiff.height * canvasA.height;
             
             // Flash hint on both canvases
             [ctxA, ctxB].forEach(ctx => {
                 ctx.strokeStyle = 'yellow';
                 ctx.lineWidth = 4;
-                ctx.strokeRect(x, y, width, height);
+                ctx.beginPath();
+                ctx.arc(x + width/2, y + height/2, Math.max(width, height)/2 + 15, 0, 2 * Math.PI);
+                ctx.stroke();
             });
             
-            // Remove hint after 2 seconds
+            // Remove hint after 3 seconds
             setTimeout(() => {
-                [ctxA, ctxB].forEach(ctx => {
-                    ctx.clearRect(x - 2, y - 2, width + 4, height + 4);
-                });
-            }, 2000);
+                setupCanvases(); // Redraw everything to clear hint
+            }, 3000);
+        } else {
+            alert('No more differences to find! 🎉');
+        }
+    }
+
+    // Debug mode toggle
+    function toggleDebugMode() {
+        debugMode = !debugMode;
+        debugButton.textContent = debugMode ? '🔧 Debug: ON' : '🔧 Debug Mode';
+        debugButton.style.backgroundColor = debugMode ? '#ffc107' : '#fff';
+        
+        if (debugMode) {
+            alert('Debug mode ON: Click anywhere to see coordinates in console');
         }
     }
 
     // Event listeners
     resetButton.addEventListener('click', resetGame);
     hintButton.addEventListener('click', showHint);
+    debugButton.addEventListener('click', toggleDebugMode);
 
     // Home button event listener
     homeButton.addEventListener('click', () => {
