@@ -1,19 +1,19 @@
 // Service Worker for Fun Games for Kids
 const CACHE_NAME = 'kids-games-v1';
 const urlsToCache = [
-  '/games/',
-  '/games/index.html',
-  '/games/assets/css/common.css',
-  '/games/games/drawing/',
-  '/games/games/puzzle/',
-  '/games/games/matching/',
-  '/games/games/dress_up/',
-  '/games/games/othello/',
-  '/games/games/shogi/',
-  '/games/games/spot_the_difference/',
-  '/games/games/rhythm/',
-  '/games/games/whack_a_mole/',
-  '/games/games/learning_quiz/'
+  './',
+  './index.html',
+  './assets/css/common.css',
+  './games/drawing/',
+  './games/puzzle/',
+  './games/matching/',
+  './games/dress_up/',
+  './games/othello/',
+  './games/shogi/',
+  './games/spot_the_difference/',
+  './games/rhythm/',
+  './games/whack_a_mole/',
+  './games/learning_quiz/'
 ];
 
 // Install event - cache resources
@@ -41,7 +41,7 @@ self.addEventListener('fetch', (event) => {
       .catch(() => {
         // If both cache and network fail, show offline page
         if (event.request.destination === 'document') {
-          return caches.match('/games/');
+          return caches.match('./');
         }
       })
   );

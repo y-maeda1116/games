@@ -1,72 +1,98 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+/* マッチングゲーム専用スタイル */
+
+h1 {
+    color: var(--gray-900, #111827);
     margin: 0;
-    background-color: #f0f0f0;
-    padding-top: 20px; /* Add some space at the top */
-    min-height: 100vh; /* Allow content to grow */
-    box-sizing: border-box; /* Include padding in height calculation */
 }
 
 .controls {
     display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap to the next line */
-    justify-content: center; /* Center buttons */
-    margin-bottom: 15px;
-    gap: 10px; /* Spacing between buttons */
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: var(--space-6, 1.5rem);
+    gap: var(--space-3, 0.75rem);
 }
 
 .game-board {
     display: grid;
-    /* grid-template-columns is set by JS based on difficulty */
-    grid-gap: 8px; /* Slightly reduced gap */
-    margin-bottom: 20px;
-    max-width: 100%; /* Ensure board doesn't overflow its container */
-    padding: 5px; /* Add a little padding so cards don't touch edges if board is flush */
-    box-sizing: border-box; /* Ensure padding is included in max-width */
+    gap: var(--space-2, 0.5rem);
+    margin-bottom: var(--space-6, 1.5rem);
+    max-width: 100%;
+    padding: var(--space-4, 1rem);
+    background: white;
+    border-radius: var(--radius-xl, 1rem);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 0.1));
+    border: 1px solid var(--gray-200, #e5e7eb);
 }
 
 .card {
-    width: 70px;  /* Further reduced card size */
-    height: 70px; /* Further reduced card size */
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px; /* Slightly reduce font size for smaller cards */
+    width: 70px;
+    height: 70px;
+    position: relative;
     cursor: pointer;
-    border-radius: 4px; /* Slightly reduce border radius */
-    transition: transform 0.3s;
-    transform-style: preserve-3d;
-}
-
-.card.flipped {
-    transform: rotateY(180deg);
-    background-color: #fff; /* Show card content background */
+    border-radius: 8px;
+    /* iOS対応: 3D transformの代わりにシンプルな表示切り替え */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .card .card-face {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: bold;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 2px solid var(--gray-300, #d1d5db);
+    box-shadow: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
 }
 
 .card .card-front {
-    background-color: #add8e6; /* Light blue for card front */
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: white;
+    opacity: 1;
+    z-index: 2;
 }
 
 .card .card-back {
-    background-color: #fff; /* White for card back (content) */
-    transform: rotateY(180deg);
+    background: white;
+    color: #1f2937;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* カードがめくられた状態 */
+.card.flipped .card-front {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.card.flipped .card-back {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* マッチした状態 */
+.card.matched .card-front {
+    opacity: 0;
+}
+
+.card.matched .card-back {
+    opacity: 1;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-color: #059669;
+}
+
+/* ホバー効果 */
+.card:hover:not(.flipped):not(.matched) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
 }
 
 .card .card-back img {
@@ -81,25 +107,42 @@ body {
     min-height: 30px; /* Reserve space for message */
 }
 
-/* General button styles - already present */
-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
-    transition: background-color 0.2s; /* Smooth hover transition */
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* Specific adjustments for buttons within the controls area */
+/* ボタンスタイル */
 .controls button {
-    padding: 8px 15px; /* Smaller padding for control buttons */
-    font-size: 16px;   /* Smaller font for control buttons */
-    margin: 0; /* Margin is handled by gap in .controls */
+    padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid var(--gray-300, #d1d5db);
+    border-radius: var(--radius-md, 0.5rem);
+    background: white;
+    color: var(--gray-700, #374151);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+}
+
+.controls button:hover {
+    background: var(--gray-50, #f9fafb);
+    border-color: var(--gray-400, #9ca3af);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+}
+
+#reset-button {
+    background: var(--primary, #6366f1);
+    color: white;
+    border-color: var(--primary, #6366f1);
+}
+
+#reset-button:hover {
+    background: var(--primary-dark, #4f46e5);
+    border-color: var(--primary-dark, #4f46e5);
+}
+.message-area {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--success, #10b981);
+    margin-bottom: var(--space-6, 1.5rem);
+    min-height: 2rem;
+    text-align: center;
 }

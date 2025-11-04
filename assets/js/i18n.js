@@ -33,7 +33,11 @@ class I18n {
         }
 
         try {
-            const response = await fetch(`/games/assets/lang/${lang}.json`);
+            // 相対パスを使用してiOS互換性を向上
+            const basePath = window.location.pathname.includes('/games/') 
+                ? '../../assets/lang/' 
+                : './assets/lang/';
+            const response = await fetch(`${basePath}${lang}.json`);
             if (!response.ok) {
                 throw new Error(`Failed to load ${lang}.json`);
             }

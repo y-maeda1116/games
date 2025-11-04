@@ -36,39 +36,63 @@ document.addEventListener('DOMContentLoaded', () => {
     let redoStack = [];
     const maxUndoSteps = 20;
 
-    // --- Drawing Event Listeners ---
-    canvas.addEventListener('mousedown', (e) => {
+    // --- Drawing Event Listeners (Mouse + Touch) ---
+    
+    // マウスイベント
+    canvas.addEventListener('mousedown', handleStart);
+    canvas.addEventListener('mousemove', handleMove);
+    canvas.addEventListener('mouseup', handleEnd);
+    canvas.addEventListener('mouseout', handleEnd);
+    
+    // タッチイベント（iOS対応）
+    canvas.addEventListener('touchstart', handleStart, { passive: false });
+    canvas.addEventListener('touchmove', handleMove, { passive: false });
+    canvas.addEventListener('touchend', handleEnd);
+    canvas.addEventListener('touchcancel', handleEnd);
+    
+    function getEventPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+        const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+        
+        return {
+            x: clientX - rect.left,
+            y: clientY - rect.top
+        };
+    }
+    
+    function handleStart(e) {
+        e.preventDefault(); // iOS scrolling prevention
+        
         // Save canvas state before starting to draw
         saveCanvasState();
         
+        const pos = getEventPos(e);
+        
         if (selectedStamp) {
-            placeStamp(e.offsetX, e.offsetY);
+            placeStamp(pos.x, pos.y);
         } else {
             isDrawing = true;
-            [lastX, lastY] = [e.offsetX, e.offsetY];
+            [lastX, lastY] = [pos.x, pos.y];
         }
-    });
-
-    canvas.addEventListener('mousemove', (e) => {
+    }
+    
+    function handleMove(e) {
         if (!isDrawing) return;
-        draw(e.offsetX, e.offsetY);
-    });
-
-    canvas.addEventListener('mouseup', () => {
+        e.preventDefault(); // iOS scrolling prevention
+        
+        const pos = getEventPos(e);
+        draw(pos.x, pos.y);
+    }
+    
+    function handleEnd(e) {
         if (isDrawing) {
             isDrawing = false;
             // Clear redo stack when new action is performed
             redoStack = [];
             updateUndoRedoButtons();
         }
-    });
-
-    canvas.addEventListener('mouseout', () => {
-        if (isDrawing) {
-            // Stop drawing if mouse leaves canvas
-            isDrawing = false;
-        }
-    });
+    }
 
     // --- Drawing Function ---
     function draw(x, y) {

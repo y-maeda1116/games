@@ -197,14 +197,19 @@ h1 {
 }
 
 #drawingCanvas {
-    border: 2px solid var(--gray-300);
-    border-radius: var(--radius-lg);
+    border: 2px solid var(--gray-300, #d1d5db);
+    border-radius: var(--radius-lg, 0.75rem);
     cursor: crosshair;
     background: white;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 0.1));
     transition: border-color 0.2s;
+    /* iOS対応 */
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 #drawingCanvas:hover {
-    border-color: var(--gray-400);
+    border-color: var(--gray-400, #9ca3af);
 }

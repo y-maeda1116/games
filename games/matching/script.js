@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             flippedCards = [];
 
             if (matchedPairs === totalPairs) {
-                messageArea.textContent = 'You Win!';
+                messageArea.textContent = window.i18n ? window.i18n.t('common.youWin') : 'You Win!';
             }
         } else {
             // No match, flip back after a delay
@@ -128,6 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
     homeButton.addEventListener('click', () => {
         window.location.href = '../../index.html';
     });
+
+    // 多言語対応を初期化
+    if (window.i18n) {
+        window.i18n.init();
+    }
 
     // Initialize the game
     createBoard();

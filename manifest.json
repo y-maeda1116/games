@@ -2,7 +2,7 @@
   "name": "Fun Games for Kids",
   "short_name": "Kids Games",
   "description": "Collection of 10 fun, educational browser games for kids aged 5+",
-  "start_url": "/games/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f9fafb",
   "theme_color": "#6366f1",

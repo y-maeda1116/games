@@ -96,6 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add drag listeners to pieces
             piece.addEventListener('dragstart', handleDragStart);
             piece.addEventListener('dragend', handleDragEnd);
+            
+            // iOS対応: タッチイベント追加
+            piece.addEventListener('touchstart', handleTouchStart, { passive: false });
+            piece.addEventListener('touchmove', handleTouchMove, { passive: false });
+            piece.addEventListener('touchend', handleTouchEnd, { passive: false });
         });
     }
 
@@ -121,6 +126,72 @@ document.addEventListener('DOMContentLoaded', () => {
         event.target.style.opacity = '1'; // Reset opacity
         draggedPiece = null;
         // If not dropped on a valid slot, it will remain in piecesArea or snap back (later)
+    }
+
+    // --- Touch Event Handlers (iOS対応) ---
+    let touchStartPos = null;
+    let touchPiece = null;
+
+    function handleTouchStart(event) {
+        event.preventDefault();
+        touchPiece = event.target;
+        draggedPiece = touchPiece;
+        
+        const touch = event.touches[0];
+        touchStartPos = { x: touch.clientX, y: touch.clientY };
+        
+        touchPiece.style.opacity = '0.5';
+        touchPiece.style.zIndex = '1000';
+        touchPiece.style.position = 'fixed';
+        touchPiece.style.pointerEvents = 'none';
+        
+        // Save canvas state
+        saveCanvasState();
+    }
+
+    function handleTouchMove(event) {
+        if (!touchPiece) return;
+        event.preventDefault();
+        
+        const touch = event.touches[0];
+        const rect = touchPiece.getBoundingClientRect();
+        
+        touchPiece.style.left = (touch.clientX - rect.width / 2) + 'px';
+        touchPiece.style.top = (touch.clientY - rect.height / 2) + 'px';
+    }
+
+    function handleTouchEnd(event) {
+        if (!touchPiece) return;
+        event.preventDefault();
+        
+        const touch = event.changedTouches[0];
+        const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetSlot = elementBelow ? elementBelow.closest('.puzzle-slot') : null;
+        
+        // Reset piece styles
+        touchPiece.style.opacity = '1';
+        touchPiece.style.zIndex = '';
+        touchPiece.style.position = '';
+        touchPiece.style.pointerEvents = '';
+        touchPiece.style.left = '';
+        touchPiece.style.top = '';
+        
+        if (targetSlot) {
+            // Simulate drop event
+            const fakeEvent = {
+                target: targetSlot,
+                preventDefault: () => {}
+            };
+            handleDrop(fakeEvent);
+        } else {
+            // Return to pieces area if not dropped on valid slot
+            if (touchPiece.parentNode !== piecesArea) {
+                piecesArea.appendChild(touchPiece);
+            }
+        }
+        
+        touchPiece = null;
+        draggedPiece = null;
     }
 
     function handleDragOver(event) {
