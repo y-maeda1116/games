@@ -5,18 +5,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetButton = document.getElementById('reset-button');
     const homeButton = document.getElementById('homeButton');
 
+    const imgVersion = 'v=20260421';
     const availableImages = [
-        '../../assets/images/puzzle_game/smiling_sun.svg',
-        '../../assets/images/puzzle_game/puzzle_image_1.svg',
-        '../../assets/images/puzzle_game/puzzle_image_2.svg',
-        '../../assets/images/puzzle_game/puzzle_image_3.svg',
-        '../../assets/images/puzzle_game/puzzle_image_4.svg',
-        '../../assets/images/puzzle_game/puzzle_image_5.svg',
-        '../../assets/images/puzzle_game/puzzle_image_6.svg',
-        '../../assets/images/puzzle_game/puzzle_image_7.svg',
-        '../../assets/images/puzzle_game/puzzle_image_8.svg',
-        '../../assets/images/puzzle_game/puzzle_image_9.svg',
-        '../../assets/images/puzzle_game/puzzle_image_10.svg'
+        `../../assets/images/puzzle_game/smiling_sun.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_1.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_2.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_3.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_4.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_5.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_6.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_7.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_8.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_9.svg?${imgVersion}`,
+        `../../assets/images/puzzle_game/puzzle_image_10.svg?${imgVersion}`
     ];
     let selectedImageUrl; // Will be set in initGame
 
