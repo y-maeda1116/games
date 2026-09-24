@@ -7,10 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pvpButton = document.getElementById('player-vs-player');
     const pvaButton = document.getElementById('player-vs-ai');
 
-    const BOARD_SIZE = 8;
-    const EMPTY = 0;
-    const PLAYER_BLACK = 1;
-    const PLAYER_WHITE = 2;
+    const { BOARD_SIZE, EMPTY, PLAYER_BLACK, PLAYER_WHITE, getValidMoves: _getValidMoves, flipDiscs: _flipDiscs, calculateScores, hasAnyValidMoves, checkGameOver } = window.OthelloLogic;
 
     let board = [];
     let currentPlayer;
@@ -78,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Updates the game information display (current player, scores).
      */
     function updateGameInfo() {
-        const scores = calculateScores();
+        const scores = calculateScores(board);
         let playerText = '';
         if (currentPlayer === PLAYER_BLACK) {
             playerText = 'Black';
@@ -92,18 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Calculates the current scores for black and white.
+     * Delegates to OthelloLogic.calculateScores.
      */
-    function calculateScores() {
-        let blackScore = 0;
-        let whiteScore = 0;
-        for (let r = 0; r < BOARD_SIZE; r++) {
-            for (let c = 0; c < BOARD_SIZE; c++) {
-                if (board[r][c] === PLAYER_BLACK) blackScore++;
-                else if (board[r][c] === PLAYER_WHITE) whiteScore++;
-            }
-        }
-        return { black: blackScore, white: whiteScore };
-    }
 
     /**
      * Starts a new game with the selected mode.
@@ -141,17 +128,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // alert(`Placed a ${currentPlayer === PLAYER_BLACK ? 'White' : 'Black'} disc. Next player: ${currentPlayer === PLAYER_BLACK ? 'Black' : 'White'}`);
 
             // For now, use the existing more complete (but still partial) logic
-            const validMoves = getValidMoves(row, col, currentPlayer);
+            const validMoves = _getValidMoves(board, row, col, currentPlayer);
             if (validMoves.length > 0) {
                 _placeDiscInternal(row, col, currentPlayer);
-                flipDiscs(validMoves);
+                _flipDiscs(board, validMoves, currentPlayer);
                 renderBoard(); // Render after placing and flipping
 
                 // Switch player
                 currentPlayer = (currentPlayer === PLAYER_BLACK) ? PLAYER_WHITE : PLAYER_BLACK;
                 updateGameInfo(); // Update info for the new player
 
-                if (checkGameOver()) {
+                if (checkGameOver(board)) {
                     endGame();
                     return;
                 }
@@ -159,13 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If PvA and it's AI's turn (White)
                 if (gameMode === 'pva' && currentPlayer === PLAYER_WHITE) {
                     setTimeout(aiMove, 500); // AI makes a move after a short delay
-                } else if (!hasAnyValidMoves(currentPlayer)) {
+                } else if (!hasAnyValidMoves(board, currentPlayer)) {
                     alert(`Player ${currentPlayer === PLAYER_BLACK ? 'Black' : 'White'} has no valid moves. Turn passes.`);
                     currentPlayer = (currentPlayer === PLAYER_BLACK) ? PLAYER_WHITE : PLAYER_BLACK; // Pass turn
                     updateGameInfo();
                      if (gameMode === 'pva' && currentPlayer === PLAYER_WHITE) { // If AI's turn again after pass
                         setTimeout(aiMove, 500);
-                    } else if (hasAnyValidMoves(currentPlayer)) {
+                    } else if (hasAnyValidMoves(board, currentPlayer)) {
                         // Current player (after pass) has moves
                     } else {
                          // Neither player has moves
@@ -183,62 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function getValidMoves(row, col, player) {
-        if (board[row][col] !== EMPTY) return [];
-
-        const opponent = (player === PLAYER_BLACK) ? PLAYER_WHITE : PLAYER_BLACK;
-        const directions = [
-            [-1, -1], [-1, 0], [-1, 1], // Above
-            [0, -1], /* পাশে */ [0, 1],  // Sides
-            [1, -1], [1, 0], [1, 1]   // Below
-        ];
-        let discsToFlip = [];
-
-        for (const [dr, dc] of directions) {
-            let r = row + dr;
-            let c = col + dc;
-            let potentialFlipsInDirection = [];
-
-            while (r >= 0 && r < BOARD_SIZE && c >= 0 && c < BOARD_SIZE && board[r][c] === opponent) {
-                potentialFlipsInDirection.push({ r, c });
-                r += dr;
-                c += dc;
-            }
-            // If the line ends with the current player's disc, these are valid flips
-            if (r >= 0 && r < BOARD_SIZE && c >= 0 && c < BOARD_SIZE && board[r][c] === player) {
-                if (potentialFlipsInDirection.length > 0) {
-                     discsToFlip = discsToFlip.concat(potentialFlipsInDirection);
-                }
-            }
-        }
-        return discsToFlip; // Returns array of {r, c} for discs to flip
-    }
-
-    function flipDiscs(discsToFlip) {
-        for (const disc of discsToFlip) {
-            _placeDiscInternal(disc.r, disc.c, currentPlayer); // Flip to current player's color
-        }
-    }
-
-    function hasAnyValidMoves(player) {
-        for (let r = 0; r < BOARD_SIZE; r++) {
-            for (let c = 0; c < BOARD_SIZE; c++) {
-                if (board[r][c] === EMPTY) {
-                    if (getValidMoves(r, c, player).length > 0) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    function checkGameOver() {
-        return !hasAnyValidMoves(PLAYER_BLACK) && !hasAnyValidMoves(PLAYER_WHITE);
-    }
-
     function endGame() {
-        const scores = calculateScores();
+        const scores = calculateScores(board);
         let message = "Game Over!\n";
         if (scores.black > scores.white) {
             message += "Black wins!";
@@ -264,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let r = 0; r < BOARD_SIZE; r++) {
             for (let c = 0; c < BOARD_SIZE; c++) {
                 if (board[r][c] === EMPTY) {
-                    const flips = getValidMoves(r, c, PLAYER_WHITE);
+                    const flips = _getValidMoves(board, r, c, PLAYER_WHITE);
                     if (flips.length > maxFlips) {
                         maxFlips = flips.length;
                         bestMove = { r, c, flips };
@@ -275,16 +208,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (bestMove && bestMove.flips.length > 0) {
             _placeDiscInternal(bestMove.r, bestMove.c, PLAYER_WHITE);
-            flipDiscs(bestMove.flips); // Note: flipDiscs uses global `currentPlayer`
+            _flipDiscs(board, bestMove.flips, PLAYER_WHITE);
                                        // which should be PLAYER_WHITE here.
             renderBoard();
 
             currentPlayer = PLAYER_BLACK; // Switch to human player
             updateGameInfo();
 
-            if (checkGameOver()) {
+            if (checkGameOver(board)) {
                 endGame();
-            } else if (!hasAnyValidMoves(PLAYER_BLACK)) {
+            } else if (!hasAnyValidMoves(board, PLAYER_BLACK)) {
                 alert("Black has no valid moves. White (AI) plays again.");
                 currentPlayer = PLAYER_WHITE; // AI's turn again
                 updateGameInfo(); // Reflect AI is playing again
@@ -295,9 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("White (AI) has no valid moves. Black's turn.");
             currentPlayer = PLAYER_BLACK;
             updateGameInfo();
-            if (checkGameOver()) { // Check if game ends after AI passes
+            if (checkGameOver(board)) { // Check if game ends after AI passes
                 endGame();
-            } else if (!hasAnyValidMoves(PLAYER_BLACK)) {
+            } else if (!hasAnyValidMoves(board, PLAYER_BLACK)) {
                 alert("Black also has no valid moves. Game Over.");
                 endGame();
             }

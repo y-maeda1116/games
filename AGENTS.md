@@ -29,5 +29,5 @@ Image assets for the games are located in corresponding `images_[game_name]/` di
 - **Client-Side Only**: All code runs entirely in the client's browser. There is no backend, database, or build process.
 - **No Dependencies**: The project uses vanilla HTML, CSS, and JavaScript. Do not add any external libraries, frameworks, or dependencies (like jQuery, React, etc.) unless specifically instructed.
 - **Simplicity is Key**: The target audience is young children. Keep the games and UI simple, intuitive, and colorful.
-- **Testing**: To test your changes, simply open the relevant HTML file in a web browser. There is no automated test suite. Visual confirmation is sufficient.
+- **Testing**: Run the automated tests with `npm test` (Jest unit tests + Playwright E2E). Visual confirmation in a browser is still useful for UI changes.
 - **Adding a New Game**: If you are asked to add a new game, create a new set of `[new_game_name].html`, `[new_game_name].css`, and `[new_game_name].js` files. Then, add a link to the new game in `index.html`.
