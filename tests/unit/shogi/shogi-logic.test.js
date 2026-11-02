@@ -159,6 +159,27 @@ describe('ShogiLogic', () => {
       board[1][1] = { type: 'GOLD', player: PLAYER_GOTE, promoted: false };
       expect(isCheckmate(PLAYER_SENTE, board, [], [])).toBe(true);
     });
+
+    test('not mate when a promotable piece can capture the checker', () => {
+      // 桂取りの王手。自玉は8方向が自駒で塞がれており、銀(2,5)だけが
+      // 引き十字の斜め取り (3,6) で桂を捕獲できる。銀は成りカードを持つが、
+      // 移動駒の成り状態は王手判定に影響しないため詰みではない。
+      const board = emptyBoard();
+      board[5][5] = { type: 'KING', player: PLAYER_SENTE, promoted: false };
+      board[4][4] = { type: 'GOLD', player: PLAYER_SENTE, promoted: false };
+      board[4][5] = { type: 'PAWN', player: PLAYER_SENTE, promoted: false };
+      board[4][6] = { type: 'KNIGHT', player: PLAYER_SENTE, promoted: false };
+      board[5][4] = { type: 'GOLD', player: PLAYER_SENTE, promoted: false };
+      board[5][6] = { type: 'GOLD', player: PLAYER_SENTE, promoted: false };
+      board[6][4] = { type: 'GOLD', player: PLAYER_SENTE, promoted: false };
+      board[6][5] = { type: 'GOLD', player: PLAYER_SENTE, promoted: false };
+      board[6][6] = { type: 'GOLD', player: PLAYER_SENTE, promoted: false };
+      board[2][5] = { type: 'SILVER', player: PLAYER_SENTE, promoted: false };
+      board[3][6] = { type: 'KNIGHT', player: PLAYER_GOTE, promoted: false };
+
+      expect(isInCheck(PLAYER_SENTE, board)).toBe(true);
+      expect(isCheckmate(PLAYER_SENTE, board, [], [])).toBe(false);
+    });
   });
 
   describe('promotion', () => {
