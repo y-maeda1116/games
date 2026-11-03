@@ -165,12 +165,11 @@ const ShogiLogic = (() => {
           const moves = getValidMoves(p, r, c, currentBoard);
           for (const [mr, mc] of moves) {
             const tB = deepCopyBoard(currentBoard);
-            let simPiece = { ...p };
+            const simPiece = { ...p };
             tB[mr][mc] = simPiece;
             tB[r][c] = null;
-            if (canPromote(simPiece, mr, r, player) && (mustPromote(simPiece, mr, player) || true)) {
-              simPiece.promoted = true;
-            }
+            // 注: 成り状態は王手判定に影響しない (isInCheck は相手駒の攻撃のみを
+            // 走査するため)。移動先が同じなら成り/不成どちらの盤面でも判定は同じ。
             if (!isInCheck(player, tB)) return false;
           }
         }
