@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 canPromote(pieceCopy, mr, r, PLAYER_GOTE) &&
                 !pieceCopy.promoted
               ) {
-                if (mustPromote(pieceCopy, mr, PLAYER_GOTE) || true) {
+                if (mustPromote(pieceCopy, mr, PLAYER_GOTE)) {
                   isPromotion = true;
                 }
               }
